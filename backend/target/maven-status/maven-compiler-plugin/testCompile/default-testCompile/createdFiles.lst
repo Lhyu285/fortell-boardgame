@@ -1,0 +1,7 @@
+com\fortell\boardgame\game_modules\brass\BrassMultiplayerScenarioTest.class
+com\fortell\boardgame\game_modules\brass\BrassGameModuleTest.class
+com\fortell\boardgame\game_modules\GameModuleRegistryTest.class
+com\fortell\boardgame\services\RoomServiceIntegrationTest$RecordingRealtimeGateway.class
+com\fortell\boardgame\game_modules\camel_up_cards\CamelUpCardsGameModuleTest.class
+com\fortell\boardgame\services\RoomServiceIntegrationTest.class
+com\fortell\boardgame\game_modules\GameModuleStartSmokeTest.class

@@ -1,0 +1,827 @@
+{
+    "city": [
+        {
+            "name": "WARRINGTON",
+            "cn_name": "沃灵顿",
+            "code": "M1",
+            "color": "white",
+            "type": "Market",
+            "detail": {
+                "available_players": 3,
+                "road_point": 2,
+                "market_num": 2,
+                "sale_reward": "£5"
+            }
+        },
+        {
+            "name": "SHREWSBURY",
+            "cn_name": "舒兹伯利",
+            "code": "M2",
+            "color": "white",
+            "type": "Market",
+            "detail": {
+                "available_players": 2,
+                "road_point": 2,
+                "market_num": 1,
+                "sale_reward": "4 VP"
+            }
+        },
+        {
+            "name": "NOTTINGHAM",
+            "cn_name": "诺丁汉",
+            "code": "M3",
+            "color": "white",
+            "type": "Market",
+            "detail": {
+                "available_players": 4,
+                "road_point": 2,
+                "market_num": 2,
+                "sale_reward": "3 VP"
+            }
+        },
+        {
+            "name": "GLOUCESTER",
+            "cn_name": "格罗斯特",
+            "code": "M4",
+            "color": "white",
+            "type": "Market",
+            "detail": {
+                "available_players": 2,
+                "road_point": 2,
+                "market_num": 2,
+                "sale_reward": "Develop 1"
+            }
+        },
+        {
+            "name": "OXFORD",
+            "cn_name": "牛津",
+            "code": "M5",
+            "color": "white",
+            "type": "Market",
+            "detail": {
+                "available_players": 2,
+                "road_point": 2,
+                "market_num": 2,
+                "sale_reward": "2 IncomeLevel"
+            }
+        },
+        {
+            "name": "LEEK",
+            "cn_name": "利克",
+            "code": "B1",
+            "color": "blue",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Manufacture"
+                    ],
+                    [
+                        "Cotton",
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "STOKE-ON-TRENT",
+            "cn_name": "斯托克",
+            "code": "B2",
+            "color": "blue",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Manufacture"
+                    ],
+                    [
+                        "Pottery",
+                        "Iron"
+                    ],
+                    [
+                        "Manufacture"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "STONE",
+            "cn_name": "斯通",
+            "code": "B3",
+            "color": "blue",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Brewery"
+                    ],
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "UTTOXETER",
+            "cn_name": "伍拓希特尔",
+            "code": "B4",
+            "color": "blue",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Brewery"
+                    ],
+                    [
+                        "Cotton",
+                        "Brewery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "BELPER",
+            "cn_name": "贝柏",
+            "code": "G1",
+            "color": "cyan",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Manufacture"
+                    ],
+                    [
+                        "Coal"
+                    ],
+                    [
+                        "Pottery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "DERBY",
+            "cn_name": "德比",
+            "code": "G2",
+            "color": "cyan",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Brewery"
+                    ],
+                    [
+                        "Cotton",
+                        "Manufacture"
+                    ],
+                    [
+                        "Iron"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "STAFFORD",
+            "cn_name": "斯坦福",
+            "code": "R1",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Brewery"
+                    ],
+                    [
+                        "Pottery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "BURTON-ON-TRENT",
+            "cn_name": "特伦河畔伯顿",
+            "code": "R3",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ],
+                    [
+                        "Brewery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "CANNOCK",
+            "cn_name": "坎诺克",
+            "code": "R2",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ],
+                    [
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "TAMWORTH",
+            "cn_name": "谭沃思",
+            "code": "R5",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Coal"
+                    ],
+                    [
+                        "Cotton",
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "WALSALL",
+            "cn_name": "沃尔索尔",
+            "code": "R4",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Iron",
+                        "Manufacture"
+                    ],
+                    [
+                        "Manufacture",
+                        "Brewery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "WOLVERHAMPTON",
+            "cn_name": "伍尔弗汉普顿",
+            "code": "Y2",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture"
+                    ],
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "COALBROOKDALE",
+            "cn_name": "柯尔布鲁德尔",
+            "code": "Y1",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Iron",
+                        "Brewery"
+                    ],
+                    [
+                        "Iron"
+                    ],
+                    [
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "DUDLEY",
+            "cn_name": "达德利",
+            "code": "Y3",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Coal"
+                    ],
+                    [
+                        "Iron"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "KIDDERMINSTER",
+            "cn_name": "基德明斯特",
+            "code": "Y4",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton",
+                        "Coal"
+                    ],
+                    [
+                        "Cotton"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "WORCESTER",
+            "cn_name": "伍斯特",
+            "code": "Y5",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Cotton"
+                    ],
+                    [
+                        "Cotton"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "BIRMINGHAM",
+            "cn_name": "伯明翰",
+            "code": "P1",
+            "color": "lilac",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Cotton"
+                    ],
+                    [
+                        "Manufacture"
+                    ],
+                    [
+                        "Manufacture"
+                    ],
+                    [
+                        "Iron"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "NUNEATON",
+            "cn_name": "纳尼顿",
+            "code": "P2",
+            "color": "lilac",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Brewery"
+                    ],
+                    [
+                        "Cotton",
+                        "Coal"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "COVENTRY",
+            "cn_name": "考文垂",
+            "code": "P3",
+            "color": "lilac",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Pottery"
+                    ],
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ],
+                    [
+                        "Iron",
+                        "Manufacture"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "REDDITCH",
+            "cn_name": "雷迪奇",
+            "code": "P4",
+            "color": "lilac",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Manufacture",
+                        "Coal"
+                    ],
+                    [
+                        "Iron"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "Rural_Brewery",
+            "cn_name": "乡村酿酒厂",
+            "color": "light red",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Brewery"
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "Personal_Brewery",
+            "cn_name": "私人酿酒厂",
+            "color": "light yellow",
+            "type": "Industry",
+            "detail": {
+                "factory_type": [
+                    [
+                        "Brewery"
+                    ]
+                ]
+            }
+        }
+    ],
+    "road": [
+        {
+            "src": "BELPER",
+            "dst": "DERBY",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BELPER",
+            "dst": "LEEK",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "COVENTRY",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "DUDLEY",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "NUNEATON",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "OXFORD",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "REDDITCH",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "TAMWORTH",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "WALSALL",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BIRMINGHAM",
+            "dst": "WORCESTER",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BURTON-ON-TRENT",
+            "dst": "CANNOCK",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "BURTON-ON-TRENT",
+            "dst": "DERBY",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BURTON-ON-TRENT",
+            "dst": "STONE",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BURTON-ON-TRENT",
+            "dst": "TAMWORTH",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "BURTON-ON-TRENT",
+            "dst": "WALSALL",
+            "hasBrewery": false,
+            "type": [
+                "canal"
+            ]
+        },
+        {
+            "src": "CANNOCK",
+            "dst": "STAFFORD",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "CANNOCK",
+            "dst": "Rural_Brewery",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "CANNOCK",
+            "dst": "WALSALL",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "CANNOCK",
+            "dst": "WOLVERHAMPTON",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "COALBROOKDALE",
+            "dst": "KIDDERMINSTER",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "COALBROOKDALE",
+            "dst": "SHREWSBURY",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "COALBROOKDALE",
+            "dst": "WOLVERHAMPTON",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "COVENTRY",
+            "dst": "NUNEATON",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "DERBY",
+            "dst": "NOTTINGHAM",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "DERBY",
+            "dst": "UTTOXETER",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "DUDLEY",
+            "dst": "KIDDERMINSTER",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "DUDLEY",
+            "dst": "WOLVERHAMPTON",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "GLOUCESTER",
+            "dst": "REDDITCH",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "GLOUCESTER",
+            "dst": "WORCESTER",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "KIDDERMINSTER",
+            "dst": "WORCESTER",
+            "hasBrewery": true,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "LEEK",
+            "dst": "STOKE-ON-TRENT",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "NUNEATON",
+            "dst": "TAMWORTH",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "REDDITCH",
+            "dst": "OXFORD",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "STAFFORD",
+            "dst": "STONE",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "STOKE-ON-TRENT",
+            "dst": "STONE",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "STOKE-ON-TRENT",
+            "dst": "WARRINGTON",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        },
+        {
+            "src": "STONE",
+            "dst": "UTTOXETER",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "TAMWORTH",
+            "dst": "WALSALL",
+            "hasBrewery": false,
+            "type": [
+                "railway"
+            ]
+        },
+        {
+            "src": "WALSALL",
+            "dst": "WOLVERHAMPTON",
+            "hasBrewery": false,
+            "type": [
+                "canal",
+                "railway"
+            ]
+        }
+    ]
+}

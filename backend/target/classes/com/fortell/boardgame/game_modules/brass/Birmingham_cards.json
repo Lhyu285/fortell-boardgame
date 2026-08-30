@@ -1,0 +1,316 @@
+{
+  "draw_deck": [
+    {
+      "type": "place",
+      "info": {
+        "city": "BELPER"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 0,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "DERBY"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "LEEK"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "STOKE-ON-TRENT"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "STONE"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "UTTOXETER"
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 1,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "STAFFORD"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "BURTON-ON-TRENT"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "CANNOCK"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "TAMWORTH"
+      },
+      "amount_by_player_count": {
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "WALSALL"
+      },
+      "amount_by_player_count": {
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "COALBROOKDALE"
+      },
+      "amount_by_player_count": {
+        "2": 3,
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "DUDLEY"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "KIDDERMINSTER"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "WOLVERHAMPTON"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "WORCESTER"
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "BIRMINGHAM"
+      },
+      "amount_by_player_count": {
+        "2": 3,
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "COVENTRY"
+      },
+      "amount_by_player_count": {
+        "2": 3,
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "NUNEATON"
+      },
+      "amount_by_player_count": {
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "type": "place",
+      "info": {
+        "city": "REDDITCH"
+      },
+      "amount_by_player_count": {
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": [
+          "Iron"
+        ]
+      },
+      "amount_by_player_count": {
+        "2": 4,
+        "3": 4,
+        "4": 4
+      }
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": [
+          "Coal"
+        ]
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 3
+      }
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": [
+          "Manufacture",
+          "Cotton"
+        ]
+      },
+      "amount_by_player_count": {
+        "2": 0,
+        "3": 6,
+        "4": 8
+      }
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": [
+          "Pottery"
+        ]
+      },
+      "amount_by_player_count": {
+        "2": 2,
+        "3": 2,
+        "4": 3
+      }
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": [
+          "Brewery"
+        ]
+      },
+      "amount_by_player_count": {
+        "2": 5,
+        "3": 5,
+        "4": 5
+      }
+    }
+  ],
+  "scout_pool": [
+    {
+      "type": "place",
+      "info": {
+        "city": "all"
+      },
+      "deck": "scout_pool",
+      "amount": 4
+    },
+    {
+      "type": "industry",
+      "info": {
+        "factory": "all"
+      },
+      "deck": "scout_pool",
+      "amount": 4
+    }
+  ],
+  "summary": {
+    "draw_deck_card_count_by_player_count": {
+      "2": 40,
+      "3": 54,
+      "4": 64
+    },
+    "scout_pool_card_count": 8
+  }
+}

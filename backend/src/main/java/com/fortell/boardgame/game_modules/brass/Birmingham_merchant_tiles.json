@@ -1,0 +1,104 @@
+[
+  {
+    "id": "merchant_001",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Cotton"
+      ],
+      "available_players": [2, 3, 4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  },
+  {
+    "id": "merchant_002",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Manufacture"
+      ],
+      "available_players": [2, 3, 4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  },
+  {
+    "id": "merchant_003",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Pottery", "Manufacture", "Cotton"
+      ],
+      "available_players": [2, 3, 4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  },
+  {
+    "id": "merchant_004",
+    "type": "merchant",
+    "info": {
+      "factory": [],
+      "available_players": [2, 3, 4],
+      "is_blank": true,
+      "provides_beer": false
+    }
+  },
+  {
+    "id": "merchant_005",
+    "type": "merchant",
+    "info": {
+      "factory": [],
+      "available_players": [2, 3, 4],
+      "is_blank": true,
+      "provides_beer": false
+    }
+  },
+  {
+    "id": "merchant_006",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Pottery"
+      ],
+      "available_players": [3, 4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  },
+  {
+    "id": "merchant_007",
+    "type": "merchant",
+    "info": {
+      "factory": [],
+      "available_players": [3, 4],
+      "is_blank": true,
+      "provides_beer": false
+    }
+  },
+  {
+    "id": "merchant_008",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Manufacture"
+      ],
+      "available_players": [4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  },
+  {
+    "id": "merchant_009",
+    "type": "merchant",
+    "info": {
+      "factory": [
+        "Cotton"
+      ],
+      "available_players": [4],
+      "is_blank": false,
+      "provides_beer": true
+    }
+  }
+]

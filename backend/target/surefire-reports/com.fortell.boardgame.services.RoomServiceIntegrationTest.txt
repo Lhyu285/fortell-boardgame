@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.fortell.boardgame.services.RoomServiceIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.067 s -- in com.fortell.boardgame.services.RoomServiceIntegrationTest

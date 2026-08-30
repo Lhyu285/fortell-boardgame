@@ -1,0 +1,2183 @@
+{
+  "image": {
+    "src": "/assets/BRASS_map.jpg",
+    "width": 2176,
+    "height": 2162
+  },
+  "citySlots": [
+    {
+      "city": "LEEK",
+      "code": "LEEK",
+      "cnName": "利克",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.5,
+        "y": 0.087,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "LEEK",
+      "code": "LEEK",
+      "cnName": "利克",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.542,
+        "y": 0.087,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STOKE-ON-TRENT",
+      "code": "STOKE-ON-TRENT",
+      "cnName": "斯托克",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.392,
+        "y": 0.11,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STOKE-ON-TRENT",
+      "code": "STOKE-ON-TRENT",
+      "cnName": "斯托克",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Pottery",
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "pottery",
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.37,
+        "y": 0.154,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STOKE-ON-TRENT",
+      "code": "STOKE-ON-TRENT",
+      "cnName": "斯托克",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.414,
+        "y": 0.154,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STONE",
+      "code": "STONE",
+      "cnName": "斯通",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.275,
+        "y": 0.252,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STONE",
+      "code": "STONE",
+      "cnName": "斯通",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.317,
+        "y": 0.252,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "UTTOXETER",
+      "code": "UTTOXETER",
+      "cnName": "伍拓希特尔",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.511,
+        "y": 0.236,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "UTTOXETER",
+      "code": "UTTOXETER",
+      "cnName": "伍拓希特尔",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.554,
+        "y": 0.236,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BELPER",
+      "code": "BELPER",
+      "cnName": "贝柏",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.661,
+        "y": 0.1,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BELPER",
+      "code": "BELPER",
+      "cnName": "贝柏",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.704,
+        "y": 0.1,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BELPER",
+      "code": "BELPER",
+      "cnName": "贝柏",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Pottery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "pottery"
+      ],
+      "rect": {
+        "x": 0.747,
+        "y": 0.1,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "DERBY",
+      "code": "DERBY",
+      "cnName": "德比",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.712,
+        "y": 0.214,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "DERBY",
+      "code": "DERBY",
+      "cnName": "德比",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.692,
+        "y": 0.257,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "DERBY",
+      "code": "DERBY",
+      "cnName": "德比",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.734,
+        "y": 0.257,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STAFFORD",
+      "code": "STAFFORD",
+      "cnName": "斯坦福",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.36,
+        "y": 0.339,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "STAFFORD",
+      "code": "STAFFORD",
+      "cnName": "斯坦福",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Pottery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "pottery"
+      ],
+      "rect": {
+        "x": 0.403,
+        "y": 0.339,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BURTON-ON-TRENT",
+      "code": "BURTON-ON-TRENT",
+      "cnName": "特伦河畔伯顿",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.62,
+        "y": 0.366,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BURTON-ON-TRENT",
+      "code": "BURTON-ON-TRENT",
+      "cnName": "特伦河畔伯顿",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.662,
+        "y": 0.366,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "CANNOCK",
+      "code": "CANNOCK",
+      "cnName": "坎诺克",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.428,
+        "y": 0.433,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "CANNOCK",
+      "code": "CANNOCK",
+      "cnName": "坎诺克",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.47,
+        "y": 0.433,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "TAMWORTH",
+      "code": "TAMWORTH",
+      "cnName": "谭沃思",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.633,
+        "y": 0.481,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "TAMWORTH",
+      "code": "TAMWORTH",
+      "cnName": "谭沃思",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.675,
+        "y": 0.481,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WALSALL",
+      "code": "WALSALL",
+      "cnName": "沃尔索尔",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Iron",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.48,
+        "y": 0.54,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WALSALL",
+      "code": "WALSALL",
+      "cnName": "沃尔索尔",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.522,
+        "y": 0.54,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WOLVERHAMPTON",
+      "code": "WOLVERHAMPTON",
+      "cnName": "伍尔弗汉普顿",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.332,
+        "y": 0.519,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WOLVERHAMPTON",
+      "code": "WOLVERHAMPTON",
+      "cnName": "伍尔弗汉普顿",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.374,
+        "y": 0.519,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COALBROOKDALE",
+      "code": "COALBROOKDALE",
+      "cnName": "柯尔布鲁德尔",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Iron",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.226,
+        "y": 0.516,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COALBROOKDALE",
+      "code": "COALBROOKDALE",
+      "cnName": "柯尔布鲁德尔",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.205,
+        "y": 0.559,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COALBROOKDALE",
+      "code": "COALBROOKDALE",
+      "cnName": "柯尔布鲁德尔",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.247,
+        "y": 0.559,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "DUDLEY",
+      "code": "DUDLEY",
+      "cnName": "达德利",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.375,
+        "y": 0.633,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "DUDLEY",
+      "code": "DUDLEY",
+      "cnName": "达德利",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.416,
+        "y": 0.633,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "KIDDERMINSTER",
+      "code": "KIDDERMINSTER",
+      "cnName": "基德明斯特",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.31,
+        "y": 0.728,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "KIDDERMINSTER",
+      "code": "KIDDERMINSTER",
+      "cnName": "基德明斯特",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill"
+      ],
+      "rect": {
+        "x": 0.352,
+        "y": 0.728,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WORCESTER",
+      "code": "WORCESTER",
+      "cnName": "伍斯特",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Cotton"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill"
+      ],
+      "rect": {
+        "x": 0.323,
+        "y": 0.848,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WORCESTER",
+      "code": "WORCESTER",
+      "cnName": "伍斯特",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill"
+      ],
+      "rect": {
+        "x": 0.365,
+        "y": 0.848,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BIRMINGHAM",
+      "code": "BIRMINGHAM",
+      "cnName": "伯明翰",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Cotton"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "cotton_mill"
+      ],
+      "rect": {
+        "x": 0.569,
+        "y": 0.624,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BIRMINGHAM",
+      "code": "BIRMINGHAM",
+      "cnName": "伯明翰",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.612,
+        "y": 0.624,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BIRMINGHAM",
+      "code": "BIRMINGHAM",
+      "cnName": "伯明翰",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.569,
+        "y": 0.668,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "BIRMINGHAM",
+      "code": "BIRMINGHAM",
+      "cnName": "伯明翰",
+      "slotIndex": 3,
+      "allowedIndustryTypes": [
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.612,
+        "y": 0.668,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "NUNEATON",
+      "code": "NUNEATON",
+      "cnName": "纳尼顿",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.716,
+        "y": 0.575,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "NUNEATON",
+      "code": "NUNEATON",
+      "cnName": "纳尼顿",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Cotton",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "cotton_mill",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.759,
+        "y": 0.575,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COVENTRY",
+      "code": "COVENTRY",
+      "cnName": "考文垂",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Pottery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "pottery"
+      ],
+      "rect": {
+        "x": 0.759,
+        "y": 0.654,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COVENTRY",
+      "code": "COVENTRY",
+      "cnName": "考文垂",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.737,
+        "y": 0.697,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "COVENTRY",
+      "code": "COVENTRY",
+      "cnName": "考文垂",
+      "slotIndex": 2,
+      "allowedIndustryTypes": [
+        "Iron",
+        "Manufacture"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works",
+        "manufacturer"
+      ],
+      "rect": {
+        "x": 0.78,
+        "y": 0.697,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "REDDITCH",
+      "code": "REDDITCH",
+      "cnName": "雷迪奇",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Manufacture",
+        "Coal"
+      ],
+      "allowedIndustryTypesBackend": [
+        "manufacturer",
+        "coal_mine"
+      ],
+      "rect": {
+        "x": 0.527,
+        "y": 0.777,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "REDDITCH",
+      "code": "REDDITCH",
+      "cnName": "雷迪奇",
+      "slotIndex": 1,
+      "allowedIndustryTypes": [
+        "Iron"
+      ],
+      "allowedIndustryTypesBackend": [
+        "iron_works"
+      ],
+      "rect": {
+        "x": 0.569,
+        "y": 0.777,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "Rural_Brewery",
+      "code": "Rural_Brewery",
+      "cnName": "乡村酿酒厂",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.288,
+        "y": 0.422,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "Personal_Brewery",
+      "code": "Personal_Brewery",
+      "cnName": "私人酿酒厂",
+      "slotIndex": 0,
+      "allowedIndustryTypes": [
+        "Brewery"
+      ],
+      "allowedIndustryTypesBackend": [
+        "brewery"
+      ],
+      "rect": {
+        "x": 0.251,
+        "y": 0.797,
+        "w": 0.041,
+        "h": 0.041
+      }
+    }
+  ],
+  "routes": [
+    {
+      "routeId": "BELPER_DERBY",
+      "src": "BELPER",
+      "dst": "DERBY",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.708,
+          "y": 0.143
+        },
+        {
+          "x": 0.734,
+          "y": 0.173
+        },
+        {
+          "x": 0.748,
+          "y": 0.214
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BELPER_LEEK",
+      "src": "BELPER",
+      "dst": "LEEK",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.661,
+          "y": 0.111
+        },
+        {
+          "x": 0.584,
+          "y": 0.102
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_COVENTRY",
+      "src": "BIRMINGHAM",
+      "dst": "COVENTRY",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.653,
+          "y": 0.696
+        },
+        {
+          "x": 0.683,
+          "y": 0.708
+        },
+        {
+          "x": 0.713,
+          "y": 0.716
+        },
+        {
+          "x": 0.738,
+          "y": 0.716
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_DUDLEY",
+      "src": "BIRMINGHAM",
+      "dst": "DUDLEY",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.568,
+          "y": 0.681
+        },
+        {
+          "x": 0.538,
+          "y": 0.678
+        },
+        {
+          "x": 0.508,
+          "y": 0.666
+        },
+        {
+          "x": 0.476,
+          "y": 0.653
+        },
+        {
+          "x": 0.456,
+          "y": 0.650
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_NUNEATON",
+      "src": "BIRMINGHAM",
+      "dst": "NUNEATON",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.654,
+          "y": 0.671
+        },
+        {
+          "x": 0.674,
+          "y": 0.658
+        },
+        {
+          "x": 0.694,
+          "y": 0.630
+        },
+        {
+          "x": 0.718,
+          "y": 0.604
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_OXFORD",
+      "src": "BIRMINGHAM",
+      "dst": "OXFORD",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.634,
+          "y": 0.710
+        },
+        {
+          "x": 0.662,
+          "y": 0.728
+        },
+        {
+          "x": 0.682,
+          "y": 0.744
+        },
+        {
+          "x": 0.702,
+          "y": 0.771
+        },
+        {
+          "x": 0.712,
+          "y": 0.797
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_REDDITCH",
+      "src": "BIRMINGHAM",
+      "dst": "REDDITCH",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.602,
+          "y": 0.708
+        },
+        {
+          "x": 0.596,
+          "y": 0.766
+        },
+        {
+          "x": 0.591,
+          "y": 0.776
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_TAMWORTH",
+      "src": "BIRMINGHAM",
+      "dst": "TAMWORTH",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.647,
+          "y": 0.624
+        },
+        {
+          "x": 0.668,
+          "y": 0.596
+        },
+        {
+          "x": 0.682,
+          "y": 0.564
+        },
+        {
+          "x": 0.692,
+          "y": 0.522
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_WALSALL",
+      "src": "BIRMINGHAM",
+      "dst": "WALSALL",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.570,
+          "y": 0.654
+        },
+        {
+          "x": 0.542,
+          "y": 0.628
+        },
+        {
+          "x": 0.522,
+          "y": 0.582
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BIRMINGHAM_WORCESTER",
+      "src": "BIRMINGHAM",
+      "dst": "WORCESTER",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.569,
+          "y": 0.692
+        },
+        {
+          "x": 0.542,
+          "y": 0.698
+        },
+        {
+          "x": 0.522,
+          "y": 0.709
+        },
+        {
+          "x": 0.506,
+          "y": 0.728
+        },
+        {
+          "x": 0.440,
+          "y": 0.835
+        },
+        {
+          "x": 0.407,
+          "y": 0.854
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BURTON-ON-TRENT_CANNOCK",
+      "src": "BURTON-ON-TRENT",
+      "dst": "CANNOCK",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.620,
+          "y": 0.378
+        },
+        {
+          "x": 0.513,
+          "y": 0.438
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BURTON-ON-TRENT_DERBY",
+      "src": "BURTON-ON-TRENT",
+      "dst": "DERBY",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.704,
+          "y": 0.366
+        },
+        {
+          "x": 0.733,
+          "y": 0.342
+        },
+        {
+          "x": 0.758,
+          "y": 0.298
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BURTON-ON-TRENT_STONE",
+      "src": "BURTON-ON-TRENT",
+      "dst": "STONE",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.652,
+          "y": 0.366
+        },
+        {
+          "x": 0.618,
+          "y": 0.342
+        },
+        {
+          "x": 0.578,
+          "y": 0.324
+        },
+        {
+          "x": 0.448,
+          "y": 0.304
+        },
+        {
+          "x": 0.358,
+          "y": 0.288
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BURTON-ON-TRENT_TAMWORTH",
+      "src": "BURTON-ON-TRENT",
+      "dst": "TAMWORTH",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.672,
+          "y": 0.406
+        },
+        {
+          "x": 0.677,
+          "y": 0.481
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "BURTON-ON-TRENT_WALSALL",
+      "src": "BURTON-ON-TRENT",
+      "dst": "WALSALL",
+      "hasBrewery": false,
+      "type": [
+        "canal"
+      ],
+      "path": [
+        {
+          "x": 0.626,
+          "y": 0.406
+        },
+        {
+          "x": 0.578,
+          "y": 0.464
+        },
+        {
+          "x": 0.570,
+          "y": 0.500
+        },
+        {
+          "x": 0.552,
+          "y": 0.540
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "CANNOCK_STAFFORD",
+      "src": "CANNOCK",
+      "dst": "STAFFORD",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.482,
+          "y": 0.434
+        },
+        {
+          "x": 0.468,
+          "y": 0.392
+        },
+        {
+          "x": 0.444,
+          "y": 0.370
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "CANNOCK_Rural_Brewery",
+      "src": "CANNOCK",
+      "dst": "Rural_Brewery",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.428,
+          "y": 0.444
+        },
+        {
+          "x": 0.374,
+          "y": 0.438
+        },
+        {
+          "x": 0.328,
+          "y": 0.442
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "CANNOCK_WALSALL",
+      "src": "CANNOCK",
+      "dst": "WALSALL",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.511,
+          "y": 0.472
+        },
+        {
+          "x": 0.528,
+          "y": 0.494
+        },
+        {
+          "x": 0.532,
+          "y": 0.512
+        },
+        {
+          "x": 0.528,
+          "y": 0.541
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "CANNOCK_WOLVERHAMPTON",
+      "src": "CANNOCK",
+      "dst": "WOLVERHAMPTON",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.428,
+          "y": 0.466
+        },
+        {
+          "x": 0.396,
+          "y": 0.488
+        },
+        {
+          "x": 0.374,
+          "y": 0.516
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "COALBROOKDALE_KIDDERMINSTER",
+      "src": "COALBROOKDALE",
+      "dst": "KIDDERMINSTER",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.234,
+          "y": 0.602
+        },
+        {
+          "x": 0.251,
+          "y": 0.658
+        },
+        {
+          "x": 0.281,
+          "y": 0.702
+        },
+        {
+          "x": 0.311,
+          "y": 0.728
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "COALBROOKDALE_SHREWSBURY",
+      "src": "COALBROOKDALE",
+      "dst": "SHREWSBURY",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.226,
+          "y": 0.538
+        },
+        {
+          "x": 0.142,
+          "y": 0.544
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "COALBROOKDALE_WOLVERHAMPTON",
+      "src": "COALBROOKDALE",
+      "dst": "WOLVERHAMPTON",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.266,
+          "y": 0.538
+        },
+        {
+          "x": 0.332,
+          "y": 0.539
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "COVENTRY_NUNEATON",
+      "src": "COVENTRY",
+      "dst": "NUNEATON",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.802,
+          "y": 0.697
+        },
+        {
+          "x": 0.822,
+          "y": 0.670
+        },
+        {
+          "x": 0.826,
+          "y": 0.646
+        },
+        {
+          "x": 0.823,
+          "y": 0.632
+        },
+        {
+          "x": 0.814,
+          "y": 0.616
+        },
+        {
+          "x": 0.802,
+          "y": 0.602
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "DERBY_NOTTINGHAM",
+      "src": "DERBY",
+      "dst": "NOTTINGHAM",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.754,
+          "y": 0.254
+        },
+        {
+          "x": 0.774,
+          "y": 0.239
+        },
+        {
+          "x": 0.798,
+          "y": 0.228
+        },
+        {
+          "x": 0.822,
+          "y": 0.224
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "DERBY_UTTOXETER",
+      "src": "DERBY",
+      "dst": "UTTOXETER",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.692,
+          "y": 0.279
+        },
+        {
+          "x": 0.598,
+          "y": 0.266
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "DUDLEY_KIDDERMINSTER",
+      "src": "DUDLEY",
+      "dst": "KIDDERMINSTER",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.381,
+          "y": 0.674
+        },
+        {
+          "x": 0.358,
+          "y": 0.698
+        },
+        {
+          "x": 0.343,
+          "y": 0.728
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "DUDLEY_WOLVERHAMPTON",
+      "src": "DUDLEY",
+      "dst": "WOLVERHAMPTON",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.395,
+          "y": 0.633
+        },
+        {
+          "x": 0.381,
+          "y": 0.612
+        },
+        {
+          "x": 0.371,
+          "y": 0.589
+        },
+        {
+          "x": 0.362,
+          "y": 0.559
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "GLOUCESTER_REDDITCH",
+      "src": "GLOUCESTER",
+      "dst": "REDDITCH",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.488,
+          "y": 0.865
+        },
+        {
+          "x": 0.491,
+          "y": 0.845
+        },
+        {
+          "x": 0.501,
+          "y": 0.828
+        },
+        {
+          "x": 0.512,
+          "y": 0.819
+        },
+        {
+          "x": 0.525,
+          "y": 0.813
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "GLOUCESTER_WORCESTER",
+      "src": "GLOUCESTER",
+      "dst": "WORCESTER",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.471,
+          "y": 0.904
+        },
+        {
+          "x": 0.436,
+          "y": 0.896
+        },
+        {
+          "x": 0.404,
+          "y": 0.886
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "KIDDERMINSTER_WORCESTER",
+      "src": "KIDDERMINSTER",
+      "dst": "WORCESTER",
+      "hasBrewery": true,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.333,
+          "y": 0.768
+        },
+        {
+          "x": 0.347,
+          "y": 0.816
+        },
+        {
+          "x": 0.291,
+          "y": 0.819
+        },
+        {
+          "x": 0.347,
+          "y": 0.816
+        },
+        {
+          "x": 0.366,
+          "y": 0.848
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "LEEK_STOKE-ON-TRENT",
+      "src": "LEEK",
+      "dst": "STOKE-ON-TRENT",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.498,
+          "y": 0.107
+        },
+        {
+          "x": 0.468,
+          "y": 0.114
+        },
+        {
+          "x": 0.448,
+          "y": 0.127
+        },
+        {
+          "x": 0.433,
+          "y": 0.140
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "NUNEATON_TAMWORTH",
+      "src": "NUNEATON",
+      "dst": "TAMWORTH",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.764,
+          "y": 0.574
+        },
+        {
+          "x": 0.765,
+          "y": 0.564
+        },
+        {
+          "x": 0.760,
+          "y": 0.536
+        },
+        {
+          "x": 0.748,
+          "y": 0.515
+        },
+        {
+          "x": 0.716,
+          "y": 0.494
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "OXFORD_REDDITCH",
+      "src": "REDDITCH",
+      "dst": "OXFORD",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.611,
+          "y": 0.809
+        },
+        {
+          "x": 0.634,
+          "y": 0.812
+        },
+        {
+          "x": 0.678,
+          "y": 0.823
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "STAFFORD_STONE",
+      "src": "STAFFORD",
+      "dst": "STONE",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.362,
+          "y": 0.368
+        },
+        {
+          "x": 0.332,
+          "y": 0.354
+        },
+        {
+          "x": 0.321,
+          "y": 0.344
+        },
+        {
+          "x": 0.309,
+          "y": 0.325
+        },
+        {
+          "x": 0.299,
+          "y": 0.292
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "STOKE-ON-TRENT_STONE",
+      "src": "STOKE-ON-TRENT",
+      "dst": "STONE",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.404,
+          "y": 0.196
+        },
+        {
+          "x": 0.382,
+          "y": 0.225
+        },
+        {
+          "x": 0.362,
+          "y": 0.241
+        },
+        {
+          "x": 0.338,
+          "y": 0.252
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "STOKE-ON-TRENT_WARRINGTON",
+      "src": "STOKE-ON-TRENT",
+      "dst": "WARRINGTON",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.392,
+          "y": 0.152
+        },
+        {
+          "x": 0.348,
+          "y": 0.125
+        },
+        {
+          "x": 0.322,
+          "y": 0.119
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "STONE_UTTOXETER",
+      "src": "STONE",
+      "dst": "UTTOXETER",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.357,
+          "y": 0.272
+        },
+        {
+          "x": 0.442,
+          "y": 0.260
+        },
+        {
+          "x": 0.511,
+          "y": 0.258
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "TAMWORTH_WALSALL",
+      "src": "TAMWORTH",
+      "dst": "WALSALL",
+      "hasBrewery": false,
+      "type": [
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.645,
+          "y": 0.523
+        },
+        {
+          "x": 0.619,
+          "y": 0.544
+        },
+        {
+          "x": 0.596,
+          "y": 0.556
+        },
+        {
+          "x": 0.564,
+          "y": 0.566
+        }
+      ],
+      "clickWidth": 14
+    },
+    {
+      "routeId": "WALSALL_WOLVERHAMPTON",
+      "src": "WALSALL",
+      "dst": "WOLVERHAMPTON",
+      "hasBrewery": false,
+      "type": [
+        "canal",
+        "railway"
+      ],
+      "path": [
+        {
+          "x": 0.481,
+          "y": 0.552
+        },
+        {
+          "x": 0.461,
+          "y": 0.547
+        },
+        {
+          "x": 0.414,
+          "y": 0.542
+        }
+      ],
+      "clickWidth": 14
+    }
+  ],
+  "marketSlots": [
+    {
+      "city": "WARRINGTON",
+      "cnName": "沃灵顿",
+      "index": 0,
+      "availablePlayers": 0,
+      "rect": {
+        "x": 0.258,
+        "y": 0.074,
+        "w": 0.062,
+        "h": 0.062
+      }
+    },
+    {
+      "city": "WARRINGTON",
+      "cnName": "沃灵顿",
+      "index": 1,
+      "availablePlayers": 3,
+      "rect": {
+        "x": 0.247,
+        "y": 0.138,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "WARRINGTON",
+      "cnName": "沃灵顿",
+      "index": 2,
+      "availablePlayers": 3,
+      "rect": {
+        "x": 0.291,
+        "y": 0.138,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "SHREWSBURY",
+      "cnName": "舒兹伯利",
+      "index": 0,
+      "availablePlayers": 0,
+      "rect": {
+        "x": 0.084,
+        "y": 0.498,
+        "w": 0.062,
+        "h": 0.062
+      }
+    },
+    {
+      "city": "SHREWSBURY",
+      "cnName": "舒兹伯利",
+      "index": 1,
+      "availablePlayers": 2,
+      "rect": {
+        "x": 0.094,
+        "y": 0.562,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "NOTTINGHAM",
+      "cnName": "诺丁汉",
+      "index": 0,
+      "availablePlayers": 0,
+      "rect": {
+        "x": 0.831,
+        "y": 0.136,
+        "w": 0.062,
+        "h": 0.062
+      }
+    },
+    {
+      "city": "NOTTINGHAM",
+      "cnName": "诺丁汉",
+      "index": 1,
+      "availablePlayers": 4,
+      "rect": {
+        "x": 0.822,
+        "y": 0.198,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "NOTTINGHAM",
+      "cnName": "诺丁汉",
+      "index": 2,
+      "availablePlayers": 4,
+      "rect": {
+        "x": 0.865,
+        "y": 0.198,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "GLOUCESTER",
+      "cnName": "格罗斯特",
+      "index": 0,
+      "availablePlayers": 0,
+      "rect": {
+        "x": 0.471,
+        "y": 0.864,
+        "w": 0.062,
+        "h": 0.062
+      }
+    },
+    {
+      "city": "GLOUCESTER",
+      "cnName": "格罗斯特",
+      "index": 1,
+      "availablePlayers": 2,
+      "rect": {
+        "x": 0.546,
+        "y": 0.88,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "GLOUCESTER",
+      "cnName": "格罗斯特",
+      "index": 2,
+      "availablePlayers": 2,
+      "rect": {
+        "x": 0.59,
+        "y": 0.88,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "OXFORD",
+      "cnName": "牛津",
+      "index": 0,
+      "availablePlayers": 0,
+      "rect": {
+        "x": 0.678,
+        "y": 0.794,
+        "w": 0.062,
+        "h": 0.062
+      }
+    },
+    {
+      "city": "OXFORD",
+      "cnName": "牛津",
+      "index": 1,
+      "availablePlayers": 2,
+      "rect": {
+        "x": 0.751,
+        "y": 0.81,
+        "w": 0.041,
+        "h": 0.041
+      }
+    },
+    {
+      "city": "OXFORD",
+      "cnName": "牛津",
+      "index": 2,
+      "availablePlayers": 2,
+      "rect": {
+        "x": 0.795,
+        "y": 0.81,
+        "w": 0.041,
+        "h": 0.041
+      }
+    }
+  ]
+}

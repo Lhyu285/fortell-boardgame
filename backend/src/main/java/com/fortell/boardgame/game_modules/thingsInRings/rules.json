@@ -1,0 +1,440 @@
+[
+  {
+    "description": "人造的",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "通常位于室外",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "通常能在办公室找到",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "可以很危险",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "大多数人都触碰过",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "大多数人家里都有",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "通常能在学校找到",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "大多数人每天都会使用",
+    "type": "情境",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "长度恰好为5个字母",
+    "type": "词汇",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "首字母是元音字母或Y",
+    "type": "词汇",
+    "level": "1",
+    "note": "元音字母包含A/E/I/O/U"
+  },
+  {
+    "description": "含有字母O",
+    "type": "词汇",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "单音节",
+    "type": "词汇",
+    "level": "1",
+    "note": "英文没有/符号"
+  },
+  {
+    "description": "有1组相同字母连续出现",
+    "type": "词汇",
+    "level": "1",
+    "note": "例如TT、LL、EE"
+  },
+  {
+    "description": "含有字母R",
+    "type": "词汇",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "双音节",
+    "type": "词汇",
+    "level": "1",
+    "note": "英文恰好有一个/符号"
+  },
+  {
+    "description": "长度为5个字母或以下",
+    "type": "词汇",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "比椅子更重",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "有标准的尺寸",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "比人更大",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "可燃",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "有一个或多个洞",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "如果掉在人身上人会受伤",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "含有木头",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "多数带有斑点或条纹",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "活的",
+    "type": "属性",
+    "level": "1",
+    "note": ""
+  },
+  {
+    "description": "通常只有富人才会拥有",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "一次性使用",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "通常在它附近会有其他同类物品",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "丢了也很容易找回来",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "价值通常超过100美元",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "可以在商店里买到",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "如果从此时此地出发你可以在一小时内找到它",
+    "type": "情境",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "首字母在该单词中重复出现",
+    "type": "词汇",
+    "level": "2",
+    "note": "例如RURAL、EERIE"
+  },
+  {
+    "description": "复合词",
+    "type": "词汇",
+    "level": "2",
+    "note": "由2个或以上的单词组成，有AB标识"
+  },
+  {
+    "description": "含有4个或以下的不同字母",
+    "type": "词汇",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "含有2个或以上的不同元音字母",
+    "type": "词汇",
+    "level": "2",
+    "note": "元音字母包含A/E/I/O/U"
+  },
+  {
+    "description": "首字母位于A-M之间",
+    "type": "词汇",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "首字母位于N-Z之间",
+    "type": "词汇",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "最后一个字母是辅音字母或Y",
+    "type": "词汇",
+    "level": "2",
+    "note": "除了A/E/I/O/U以外的21个字母称为辅音字母"
+  },
+  {
+    "description": "有3个或以上的辅音字母连续出现",
+    "type": "词汇",
+    "level": "2",
+    "note": "除了A/E/I/O/U以外的21个字母称为辅音字母"
+  },
+  {
+    "description": "任意字母重复出现过",
+    "type": "词汇",
+    "level": "2",
+    "note": "例如KEEP、TOTAL"
+  },
+  {
+    "description": "含有塑料",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "通常是圆形或弯曲的",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "可以发光或反光",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "能在水中漂浮",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "容易被毁坏",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "可以被视线穿透",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "多数会发出声音",
+    "type": "属性",
+    "level": "2",
+    "note": ""
+  },
+  {
+    "description": "通常让人感到快乐",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "乘客可以带上飞机",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "神话或传说中的主题",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "可以帮助你在野外生存",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "早于美国建国",
+    "type": "情境",
+    "level": "3",
+    "note": "1776年"
+  },
+  {
+    "description": "可以在这栋建筑里找到",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "预计可以使用100年以上",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "大多数人会定期看到",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "通常能在乡村地区找到",
+    "type": "情境",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "最后2个字母都是辅音字母",
+    "type": "词汇",
+    "level": "3",
+    "note": "除了A/E/I/O/U以外的21个字母称为辅音字母"
+  },
+  {
+    "description": "长度为4到6个字母",
+    "type": "词汇",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "最后一个字母是N到Z之间的任意字母",
+    "type": "词汇",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "前2个字母按照字母表顺序出现",
+    "type": "词汇",
+    "level": "3",
+    "note": "例如AB、ST、ZA"
+  },
+  {
+    "description": "恰好只有1个元音字母",
+    "type": "词汇",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "长度为6到8个字母",
+    "type": "词汇",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "有2个或以上的元音字母连续出现",
+    "type": "词汇",
+    "level": "3",
+    "note": "元音字母包含A/E/I/O/U"
+  },
+  {
+    "description": "任意元音字母出现了至少2次",
+    "type": "词汇",
+    "level": "3",
+    "note": "元音字母包含A/E/I/O/U"
+  },
+  {
+    "description": "通常是单一颜色",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "容易清洁",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "有强烈的味道",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "多数带有文字",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "可以单手握住",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "尺寸基本一致",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "有尖刺或尖端",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  },
+  {
+    "description": "应当避免被弄湿",
+    "type": "属性",
+    "level": "3",
+    "note": ""
+  }
+]

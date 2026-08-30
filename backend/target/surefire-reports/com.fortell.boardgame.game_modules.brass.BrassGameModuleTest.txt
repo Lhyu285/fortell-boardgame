@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.fortell.boardgame.game_modules.brass.BrassGameModuleTest
+-------------------------------------------------------------------------------
+Tests run: 107, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.89 s -- in com.fortell.boardgame.game_modules.brass.BrassGameModuleTest
