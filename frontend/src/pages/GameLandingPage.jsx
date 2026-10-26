@@ -3,21 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageShell from "../components/PageShell";
 import RuleModal from "../components/RuleModal";
 import { apiPost } from "../lib/api";
-
-const DEFAULTS = {
-  rps: { seatCount: 4, config: { moveSet: 3, mode: "free_for_all" } },
-  thingsInRings: {
-    seatCount: 4,
-    config: {
-      difficulty: "hard",
-      spectatorView: "god",
-      customRules: { SCENE: "", WORD: "", ATTRIBUTE: "" }
-    }
-  },
-  camel_up_cards: { seatCount: 4, config: { expansion: "shortcut_fennec" } },
-  gobang: { seatCount: 2, config: { ruleMode: "normal", firstHand: "random" } },
-  brass: { seatCount: 4, config: { tableName: "伯明翰占位桌" } }
-};
+import { createGameDefaults, gameName } from "../games/registry.js";
 
 const ROOM_ID_PATTERN = /^[0-9]{3,8}$/;
 const PASSWORD_PATTERN = /^[A-Za-z0-9]{4,8}$/;
@@ -71,12 +57,13 @@ export default function GameLandingPage() {
     }
     setSubmitting(true);
     try {
+      const defaults = createGameDefaults(gameType);
       const data = await apiPost("/api/rooms", {
         gameType,
         roomId,
         password,
-        seatCount: DEFAULTS[gameType]?.seatCount ?? 4,
-        config: DEFAULTS[gameType]?.config ?? {}
+        seatCount: defaults.seatCount,
+        config: defaults.config
       });
       navigate(`/${gameType}/${data.roomId}`);
     } catch (exception) {
@@ -159,10 +146,5 @@ export default function GameLandingPage() {
 }
 
 function labelFor(gameType) {
-  if (gameType === "rps") return "猜拳";
-  if (gameType === "thingsInRings") return "环中物语";
-  if (gameType === "camel_up_cards") return "狂野骆驼：卡牌版";
-  if (gameType === "gobang") return "五子棋";
-  if (gameType === "brass") return "伯明翰";
-  return gameType;
+  return gameName(gameType, true);
 }

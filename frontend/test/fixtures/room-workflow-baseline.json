@@ -1,0 +1,19 @@
+{
+  "sourceHash": "11d95b7fdf78d99699908b77b50a87168518e9b683dda1875636b37ced898c8a",
+  "declarations": {
+    "PrepareRoom": "a105d79a1f758cc07d03fd712be30e76ed31700e1f4b9db5429154a102a1dfbb",
+    "GameErrorBoundary": "07c3752d91804d590d4b1b17c70b49ae08f9e23f757333d2705c4b1655a9d291",
+    "GameRoom": "f7f997669c858f2781c5649d660fd731fbdf723dc3be450be0573b3f31ef8d40",
+    "roomCurrentPlayerName": "e3ba553ab8a78b6223e83069e88d0f8304709e4b14b7fb6192d5161b9d44e965",
+    "seatListOf": "2707bb7083a7c2dfb65bbb9b67108b27da12f9f1de30c9aa8ce3f085aa47afa0",
+    "hasCurrentUserProposed": "258d0449338495dfdfcb95964bf76b4b5db5c20a4d8f42d33188c133ca1d6e0b",
+    "isFinishedGameState": "923653cd59b9919b8abbcb2a1758a25ae37518894114c729b2a851765e623b47",
+    "createClientActionId": "a50a4dfaa2457420904a81a8c1eeff8cb6b8675912f9b42d1a26969cc666e443"
+  },
+  "rendering": [
+    "24aec6991a6c46a64049a48b925b260f4805572ad1d6eb3a522a9d4dca04ab83",
+    "778d7724e5d559c3bf7db3c2331ca9535b07f49e46d94771ed016a88e3ab23b6",
+    "ecf268aaf3958da1ef7eb7382b7fb9fd9de87340ef9483874e04c639054ff5dc"
+  ],
+  "titleEffect": "e15c650eda3b0c74971f4b4a3433fd0260ba39026d63176de7cfb4920faa2559"
+}

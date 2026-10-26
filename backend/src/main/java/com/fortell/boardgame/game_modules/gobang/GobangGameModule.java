@@ -29,7 +29,7 @@ public class GobangGameModule implements GameModule {
 
     @Override
     public GameDescriptor descriptor() {
-        return new GameDescriptor("gobang", "五子棋", "/gobang", "/gobang/rule", 2, 2, "19x19 棋盘，支持普通规则胜负判定");
+        return new GameDescriptor("gobang", "五子棋", "Gomoku", "/gobang", "/gobang/rule", 2, 2, "2", "19x19 棋盘，支持普通规则胜负判定");
     }
 
     @Override

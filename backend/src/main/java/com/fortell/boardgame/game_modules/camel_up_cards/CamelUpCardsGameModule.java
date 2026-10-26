@@ -53,10 +53,12 @@ public class CamelUpCardsGameModule implements GameModule {
         return new GameDescriptor(
                 "camel_up_cards",
                 "狂野骆驼：卡牌版",
+                "Camel Up: The Card Game",
                 "/camel_up_cards",
                 "/camel_up_cards/rule",
                 2,
                 6,
+                "4~5",
                 "卡牌驱动的骆驼竞速、赛段下注和最终下注"
         );
     }

@@ -58,7 +58,7 @@ public class AuthService {
 
         UserAccount userAccount = userRepository.create(username, passwordEncoder.encode(request.password()));
         loginSession(session, userAccount);
-        return new UserSummary(userAccount.id(), userAccount.username());
+        return new UserSummary(userAccount.id(), userAccount.nickname());
     }
 
     public UserSummary login(AuthDtos.LoginRequest request, HttpSession session) {
@@ -69,14 +69,18 @@ public class AuthService {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "用户名或密码错误");
         }
         loginSession(session, userAccount);
-        return new UserSummary(userAccount.id(), userAccount.username());
+        return new UserSummary(userAccount.id(), userAccount.nickname());
     }
 
     public AuthDtos.CurrentUserResponse currentUser(HttpSession session) {
         Object id = session.getAttribute(SessionKeys.USER_ID);
-        Object username = session.getAttribute(SessionKeys.USERNAME);
-        if (id instanceof Long userId && username instanceof String userName) {
-            return new AuthDtos.CurrentUserResponse(true, new UserSummary(userId, userName));
+        if (id instanceof Long userId) {
+            return userRepository.findById(userId)
+                    .map(account -> {
+                        session.setAttribute(SessionKeys.USERNAME, account.nickname());
+                        return new AuthDtos.CurrentUserResponse(true, new UserSummary(account.id(), account.nickname()));
+                    })
+                    .orElseGet(() -> new AuthDtos.CurrentUserResponse(false, null));
         }
         return new AuthDtos.CurrentUserResponse(false, null);
     }
@@ -87,7 +91,7 @@ public class AuthService {
 
     private void loginSession(HttpSession session, UserAccount userAccount) {
         session.setAttribute(SessionKeys.USER_ID, userAccount.id());
-        session.setAttribute(SessionKeys.USERNAME, userAccount.username());
+        session.setAttribute(SessionKeys.USERNAME, userAccount.nickname());
     }
 
     private String normalizeUsername(String username) {

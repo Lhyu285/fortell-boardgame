@@ -65,10 +65,12 @@ public class ThingsInRingsGameModule implements GameModule {
         return new GameDescriptor(
                 "thingsInRings",
                 "环中物语",
+                "Things in Rings",
                 "/thingsInRings",
                 "/thingsInRings/rule",
                 2,
                 6,
+                "4",
                 "主持人掌握隐藏规则，竞猜者推理词语应该落入哪些环"
         );
     }
@@ -240,7 +242,7 @@ public class ThingsInRingsGameModule implements GameModule {
         Map<String, Object> placedWords = placedWordsOf(state);
         listAt(placedWords, area).add(word);
         state.put("placedWords", placedWords);
-        appendNotice(state, "主持人将" + wordName(word) + "放在" + areaShort(area) + "区域。");
+        appendNotice(state, "主持人" + actor.username() + "将" + wordName(word) + "放在" + areaShort(area) + "区域");
 
         List<Map<String, Object>> deck = wordDeckOf(state);
         state.put("wordDeck", deck);

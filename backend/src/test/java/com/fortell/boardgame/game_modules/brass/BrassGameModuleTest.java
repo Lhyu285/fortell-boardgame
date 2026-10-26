@@ -1,5 +1,7 @@
 package com.fortell.boardgame.game_modules.brass;
 
+import com.fortell.boardgame.models.ApiException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fortell.boardgame.models.GameType;
 import com.fortell.boardgame.models.RoomEntity;
@@ -73,7 +75,7 @@ class BrassGameModuleTest {
         BrassGameModule module = new BrassGameModule();
         var state = startPlaying(module);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
         assertEquals(1, state.get("round"));
         assertEquals(1L, state.get("currentPlayerId"));
         assertEquals(0, ((Map<?, ?>) state.get("turn")).get("actionsRemaining"));
@@ -82,22 +84,22 @@ class BrassGameModuleTest {
         assertTrue(availableActions(state).contains("end_turn"));
         assertFalse(availableActions(state).contains("loan"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
         assertEquals(1L, state.get("currentPlayerId"));
         assertEquals(1, ((Map<?, ?>) state.get("turn")).get("actionsRemaining"));
         assertFalse(availableActions(state).contains("restart_turn"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
         assertTrue(availableActions(state).contains("restart_turn"));
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
         assertEquals(1, ((Map<?, ?>) state.get("turn")).get("actionsRemaining"));
         assertEquals(8, handSize(state, "1"));
         assertFalse(availableActions(state).contains("restart_turn"));
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
         state = endTurn(module, state, 1L, "A");
         assertEquals(2L, state.get("currentPlayerId"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", firstCardId(state, "2")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", firstCardId(state, "2")), List.of());
         state = endTurn(module, state, 2L, "B");
         assertEquals(2, state.get("round"));
         assertEquals(1L, state.get("currentPlayerId"));
@@ -105,12 +107,12 @@ class BrassGameModuleTest {
         assertEquals(17, playerStat(state, "1", "money"));
         assertEquals(0, playerStat(state, "1", "lastIncome"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", firstCardId(state, "1")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", firstCardId(state, "1")), List.of());
         assertEquals(47, playerStat(state, "1", "money"));
         assertEquals(1, ((Map<?, ?>) state.get("turn")).get("actionsRemaining"));
         assertTrue(availableActions(state).contains("restart_turn"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "restart_turn", Map.of(), List.of());
         assertEquals(17, playerStat(state, "1", "money"));
         assertEquals(2, ((Map<?, ?>) state.get("turn")).get("actionsRemaining"));
         assertFalse(availableActions(state).contains("restart_turn"));
@@ -123,7 +125,7 @@ class BrassGameModuleTest {
         String playerOneCard = firstCardId(state, "1");
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
                 new UserSummary(2, "B"), "skip", Map.of("cardId", playerOneCard), List.of()));
 
         assertEquals(1L, state.get("currentPlayerId"));
@@ -135,12 +137,12 @@ class BrassGameModuleTest {
         BrassGameModule module = new BrassGameModule();
         var state = startPlaying(module);
         String cardId = firstCardId(state, "1");
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", cardId), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", cardId), List.of());
         assertEquals(true, ((Map<?, ?>) state.get("turn")).get("awaitingEndTurn"));
 
         var targetState = state;
         String loanCardId = firstCardId(state, "1");
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
                 new UserSummary(1, "A"), "loan", Map.of("cardId", loanCardId), List.of()));
 
         assertEquals(17, playerStat(state, "1", "money"));
@@ -153,7 +155,7 @@ class BrassGameModuleTest {
         var state = startPlaying(module);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
                 new UserSummary(1, "A"), "maintain_era", Map.of(), List.of()));
 
         assertEquals("canal", state.get("era"));
@@ -168,7 +170,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
         setPlayerStat(state, "1", "incomeLevel", 3);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of());
 
         assertEquals(47, playerStat(state, "1", "money"));
         assertEquals(0, playerStat(state, "1", "incomeLevel"));
@@ -183,7 +185,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
         setPlayerStat(state, "1", "incomeLevel", 26);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of());
 
         assertEquals(20, playerStat(state, "1", "incomeLevel"));
         assertEquals(5, playerStat(state, "1", "income"));
@@ -199,7 +201,7 @@ class BrassGameModuleTest {
             setPlayerStat(state, "1", "incomeLevel", incomeLevel);
 
             var targetState = state;
-            assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of()));
+            assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "loan", Map.of("cardId", "card-a"), List.of()));
 
             assertEquals(17, playerStat(state, "1", "money"));
             assertEquals(incomeLevel, playerStat(state, "1", "incomeLevel"));
@@ -214,7 +216,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "loan", Map.of("cardId", "missing-card"), List.of()));
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "loan", Map.of("cardId", "missing-card"), List.of()));
 
         assertEquals(17, playerStat(state, "1", "money"));
         assertEquals(10, playerStat(state, "1", "incomeLevel"));
@@ -231,7 +233,7 @@ class BrassGameModuleTest {
         int initialDiscardCount = ((List<?>) state.get("discardPile")).size();
         int initialScoutPoolCount = ((List<?>) state.get("scoutPool")).size();
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of(
                 "cardId", "wild-location"
         ), List.of());
 
@@ -246,7 +248,7 @@ class BrassGameModuleTest {
         var state = startSecondRound(module);
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "cotton_mill"
@@ -269,7 +271,7 @@ class BrassGameModuleTest {
                 tile("coal-a", 2L, "B", "Derby", "coal_mine", "Coal Mine", 1, 0, 0, 4, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Derby",
                 "industryType", "manufacturer",
@@ -281,6 +283,193 @@ class BrassGameModuleTest {
     }
 
     @Test
+    void buildCanUseExplicitExistingIndustryIdAndMustUseFreeCoalBeforeMarket() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Derby", "Derby")));
+        replaceIndustries(state, List.of(
+                tile("coal-a", 2L, "B", "Derby", "coal_mine", "Coal Mine", 2, 0, 0, 4, 3)
+        ));
+
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+                "cardId", "card-a",
+                "city", "Derby",
+                "industryType", "manufacturer",
+                "resourceSelections", List.of(Map.of(
+                        "type", "coal",
+                        "sourceType", "industry",
+                        "sourceId", "coal-a",
+                        "requirementIndex", 0,
+                        "amount", 1
+                ))
+        ), List.of());
+
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        Map<?, ?> coal = industries.stream()
+                .map(Map.class::cast)
+                .filter(tile -> "coal-a".equals(tile.get("id")))
+                .findFirst()
+                .orElseThrow();
+        assertEquals(1, coal.get("coal"));
+        assertTrue(industries.stream().map(Map.class::cast)
+                .anyMatch(tile -> "manufacturer".equals(tile.get("industryType"))));
+    }
+
+    @Test
+    void buildRejectsMissingAndLegacyResourceSelectionsWithoutChangingState() throws Exception {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Derby", "Derby")));
+        replaceIndustries(state, List.of(
+                tile("coal-a", 2L, "B", "Derby", "coal_mine", "Coal Mine", 2, 0, 0, 4, 3)
+        ));
+        List<Map<String, Object>> invalidPayloads = List.of(
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer"),
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer",
+                        "coalSourceTileId", "coal-a"),
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer",
+                        "resourceSelections", List.of()),
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer",
+                        "resourceSelections", List.of(Map.of("type", "coal", "sourceType", "industry",
+                                "sourceId", "coal-a", "requirementIndex", 3, "amount", 1))),
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer",
+                        "resourceSelections", List.of(Map.of("type", "iron", "sourceType", "industry",
+                                "sourceId", "coal-a", "requirementIndex", 0, "amount", 1))),
+                Map.of("cardId", "card-a", "city", "Derby", "industryType", "manufacturer",
+                        "resourceSelections", List.of(Map.of("type", "coal", "sourceType", "industry",
+                                "sourceId", "missing-tile", "requirementIndex", 0, "amount", 1)))
+        );
+
+        for (Map<String, Object> payload : invalidPayloads) {
+            String before = new ObjectMapper().writeValueAsString(state);
+            assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), state,
+                    new UserSummary(1, "A"), "build", payload, List.of()));
+            assertEquals(before, new ObjectMapper().writeValueAsString(state));
+        }
+    }
+
+    @Test
+    void explicitCoalSelectionRejectsMarketWhileFreeCoalIsStillAvailable() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Derby", "Derby")));
+        replaceIndustries(state, List.of(
+                tile("coal-a", 2L, "B", "Derby", "coal_mine", "Coal Mine", 2, 0, 0, 4, 3)
+        ));
+
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), state,
+                new UserSummary(1, "A"), "build", Map.of(
+                        "cardId", "card-a",
+                        "city", "Derby",
+                        "industryType", "manufacturer",
+                        "resourceSelections", List.of(Map.of(
+                                "type", "coal",
+                                "sourceType", "market",
+                                "sourceId", "market:coal",
+                                "requirementIndex", 0,
+                                "amount", 1
+                        ))
+                ), List.of()));
+
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        assertEquals(1, industries.size());
+        assertTrue(industries.stream().map(Map.class::cast)
+                .noneMatch(tile -> "manufacturer".equals(tile.get("industryType"))));
+    }
+
+    @Test
+    void developRejectsSelectionAboveSourceInventoryWithoutChangingState() throws Exception {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        replaceIndustries(state, List.of(
+                tile("iron-a", 2L, "B", "Birmingham", "iron_works", "Iron Works", 0, 1, 0, 3, 3)
+        ));
+        String before = new ObjectMapper().writeValueAsString(state);
+
+        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), state,
+                new UserSummary(1, "A"), "develop", Map.of(
+                        "cardId", "card-a",
+                        "industryTypes", List.of("coal_mine", "cotton_mill"),
+                        "resourceSelections", List.of(Map.of("type", "iron", "sourceType", "industry",
+                                "sourceId", "iron-a", "requirementIndex", 0, "amount", 2))
+                ), List.of()));
+
+        assertEquals(before, new ObjectMapper().writeValueAsString(state));
+    }
+
+    @Test
+    void developCanUseExplicitExistingIronIdAndReportsSourceNotice() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        replaceIndustries(state, List.of(
+                tile("iron-a", 2L, "B", "Birmingham", "iron_works", "Iron Works", 0, 1, 0, 3, 3)
+        ));
+
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
+                "cardId", "card-a",
+                "industryTypes", List.of("coal_mine"),
+                "resourceSelections", List.of(Map.of(
+                        "type", "iron",
+                        "sourceType", "industry",
+                        "sourceId", "iron-a",
+                        "requirementIndex", 0,
+                        "amount", 1
+                ))
+        ), List.of());
+
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        Map<?, ?> iron = industries.stream()
+                .map(Map.class::cast)
+                .filter(tile -> "iron-a".equals(tile.get("id")))
+                .findFirst()
+                .orElseThrow();
+        assertEquals(true, iron.get("flipped"));
+        assertTrue(((List<?>) state.get("notices")).stream()
+                .map(String::valueOf)
+                .anyMatch(notice -> notice.contains("使用 B 在 伯明翰 的铁")));
+    }
+
+    @Test
+    void sellCanMixOwnBreweryAndMerchantBeerWithExplicitSources() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        Map<String, Object> cotton = tile("cotton-a", 1L, "A", "Birmingham", "cotton_mill", "Cotton Mill", 0, 0, 0, 5, 5);
+        cotton.put("saleBeerCost", 2);
+        replaceIndustries(state, List.of(
+                cotton,
+                tile("beer-a", 1L, "A", "Derby", "brewery", "Brewery", 0, 0, 1, 4, 4)
+        ));
+        replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Oxford", "canal")));
+        replaceMerchant(state, "merchant_oxford", List.of("cotton_mill"), 1, false);
+        invokeRefreshDerivedState(module, state);
+
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+                "cardId", "card-a",
+                "tileId", "cotton-a",
+                "merchantId", "merchant_oxford",
+                "resourceSelections", List.of(
+                        Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-a", "requirementIndex", 0, "amount", 1),
+                        Map.of("type", "beer", "sourceType", "merchant", "sourceId", "merchant_oxford", "requirementIndex", 0, "amount", 1)
+                )
+        ), List.of());
+
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        assertTrue(industries.stream().map(Map.class::cast)
+                .anyMatch(tile -> "cotton-a".equals(tile.get("id")) && Boolean.TRUE.equals(tile.get("flipped"))));
+        assertTrue(industries.stream().map(Map.class::cast)
+                .anyMatch(tile -> "beer-a".equals(tile.get("id")) && Boolean.TRUE.equals(tile.get("flipped"))));
+        Map<?, ?> oxford = ((List<?>) ((Map<?, ?>) state.get("market")).get("beerMerchants")).stream()
+                .map(Map.class::cast)
+                .filter(merchant -> "merchant_oxford".equals(merchant.get("id")))
+                .findFirst()
+                .orElseThrow();
+        assertEquals(0, ((Number) oxford.get("beer")).intValue());
+    }
+
+    @Test
     void canalEraRejectsSecondIndustryInSameCityBySamePlayer() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
@@ -289,14 +478,14 @@ class BrassGameModuleTest {
                 card("card-b", "industry", "manufacturer", "Industry: Manufacturer")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "cotton_mill"
         ), List.of());
 
         var afterFirstBuild = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), afterFirstBuild, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), afterFirstBuild, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-b",
                 "city", "Birmingham",
                 "industryType", "manufacturer"
@@ -310,7 +499,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Derby",
                 "industryType", "manufacturer"
@@ -328,7 +517,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "pottery"
@@ -355,7 +544,7 @@ class BrassGameModuleTest {
                         && "brewery".equals(option.get("industryType"))
                         && ((List<?>) option.get("cardIds")).contains("brewery-card")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "brewery-card",
                 "city", "Personal_Brewery",
                 "industryType", "brewery"
@@ -379,7 +568,7 @@ class BrassGameModuleTest {
         breweryTile.put("resourceAmounts", List.of(1, 2));
         replacePlayerBoardTiles(canalState, "1", "brewery", List.of(breweryTile));
 
-        canalState = module.onAction(room(), seats(), module.defaultConfig(), canalState, new UserSummary(1, "A"), "build", Map.of(
+        canalState = runAction(module, room(), seats(), module.defaultConfig(), canalState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "brewery-card",
                 "city", "Stone",
                 "industryType", "brewery"
@@ -395,7 +584,7 @@ class BrassGameModuleTest {
         railBreweryTile.put("resourceAmounts", List.of(1, 2));
         replacePlayerBoardTiles(railState, "1", "brewery", List.of(railBreweryTile));
 
-        railState = module.onAction(room(), seats(), module.defaultConfig(), railState, new UserSummary(1, "A"), "build", Map.of(
+        railState = runAction(module, room(), seats(), module.defaultConfig(), railState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "brewery-card",
                 "city", "Stone",
                 "industryType", "brewery"
@@ -413,7 +602,7 @@ class BrassGameModuleTest {
         manufacturer.put("flipType", "sell");
         replacePlayerBoardTiles(state, "1", "manufacturer", List.of(manufacturer));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "manufacturer"
@@ -440,7 +629,7 @@ class BrassGameModuleTest {
         assertTrue(((List<?>) available.get("sellTiles")).isEmpty());
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
                 new UserSummary(1, "A"), "sell", Map.of(
                         "cardId", "card-a",
                         "tileId", "manufacturer-a"
@@ -458,7 +647,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Derby",
                 "industryType", "manufacturer"
@@ -478,7 +667,7 @@ class BrassGameModuleTest {
                 link("market-link", 2L, "B", "Birmingham", "Oxford", "canal")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Walsall",
                 "industryType", "manufacturer"
@@ -501,7 +690,7 @@ class BrassGameModuleTest {
         ));
         replaceLinks(state, List.of(link("market-link", 2L, "B", "Derby", "Nottingham", "canal")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Derby",
                 "industryType", "manufacturer"
@@ -525,7 +714,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Derby",
                 "industryType", "manufacturer"
@@ -551,7 +740,7 @@ class BrassGameModuleTest {
                 link("market-link", 2L, "B", "Birmingham", "Oxford", "canal")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Walsall",
                 "industryType", "manufacturer"
@@ -573,7 +762,7 @@ class BrassGameModuleTest {
                 tile("beer-a", 1L, "A", "Nottingham", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a"
         ), List.of());
@@ -584,6 +773,39 @@ class BrassGameModuleTest {
         assertEquals(19, playerStat(state, "1", "incomeLevel"));
         assertEquals(0, playerStat(state, "1", "victoryPoints"));
         assertEquals(0, handSize(state, "1"));
+    }
+
+    @Test
+    void sellCanSplitBeerAcrossExistingBreweryTileIds() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        Map<String, Object> cotton = tile("cotton-a", 1L, "A", "Birmingham", "cotton_mill", "Cotton Mill", 0, 0, 0, 5, 5);
+        cotton.put("saleBeerCost", 2);
+        replaceIndustries(state, List.of(
+                cotton,
+                tile("beer-a", 1L, "A", "Nottingham", "brewery", "Brewery", 0, 0, 1, 4, 4),
+                tile("beer-b", 1L, "A", "Oxford", "brewery", "Brewery", 0, 0, 1, 4, 4)
+        ));
+        replaceMerchant(state, "merchant_birmingham", List.of("cotton_mill"), 0, false);
+
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+                "cardId", "card-a",
+                "tileId", "cotton-a",
+                "merchantId", "merchant_birmingham",
+                "resourceSelections", List.of(
+                        Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-a", "amount", 1),
+                        Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-b", "amount", 1)
+                )
+        ), List.of());
+
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        assertTrue(industries.stream().map(Map.class::cast)
+                .filter(tile -> "cotton-a".equals(tile.get("id")))
+                .anyMatch(tile -> Boolean.TRUE.equals(tile.get("flipped"))));
+        assertTrue(industries.stream().map(Map.class::cast)
+                .filter(tile -> "beer-a".equals(tile.get("id")) || "beer-b".equals(tile.get("id")))
+                .allMatch(tile -> Boolean.TRUE.equals(tile.get("flipped"))));
     }
 
     @Test
@@ -598,7 +820,7 @@ class BrassGameModuleTest {
                 tile("beer-b", 1L, "A", "Oxford", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "beerSourceTileId", "beer-a"
@@ -609,7 +831,7 @@ class BrassGameModuleTest {
         assertEquals(1, ((Number) ((Map<?, ?>) state.get("turn")).get("sellCount")).intValue());
         assertTrue(((List<?>) ((Map<?, ?>) state.get("availableActions")).get("actions")).contains("end_sell"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "tileId", "manufacturer-a",
                 "beerSourceTileId", "beer-b"
         ), List.of());
@@ -622,7 +844,7 @@ class BrassGameModuleTest {
         assertEquals(0, handSize(state, "1"));
         assertEquals(2, ((Number) ((Map<?, ?>) state.get("turn")).get("sellCount")).intValue());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "end_sell", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "end_sell", Map.of(), List.of());
         Map<?, ?> turn = (Map<?, ?>) state.get("turn");
         assertEquals(1, ((Number) turn.get("actionsRemaining")).intValue());
         assertEquals(null, turn.get("sellInProgress"));
@@ -639,7 +861,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileIds", List.of("cotton-a")
         ), List.of()));
@@ -658,7 +880,7 @@ class BrassGameModuleTest {
                 card("card-b", "location", "Derby", "Derby")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall"
@@ -669,7 +891,7 @@ class BrassGameModuleTest {
         assertEquals(14, playerStat(state, "1", "money"));
 
         var afterFirstLink = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), afterFirstLink, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), afterFirstLink, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-b",
                 "from", "Derby",
                 "to", "Nottingham"
@@ -689,7 +911,7 @@ class BrassGameModuleTest {
                 card("card-a", "location", "Birmingham", "Birmingham"),
                 card("card-b", "location", "Coventry", "Coventry")
         ));
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "card-a"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "card-a"), List.of());
 
         Map<?, ?> available = (Map<?, ?>) state.get("availableActions");
         assertEquals(false, ((List<?>) available.get("actions")).contains("network"));
@@ -703,7 +925,7 @@ class BrassGameModuleTest {
         var state = startSecondRound(module);
         replaceHand(state, "1", List.of(card("card-a", "location", "Leek", "Leek")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Leek",
                 "industryType", "coal_mine"
@@ -724,7 +946,7 @@ class BrassGameModuleTest {
                 tile("coal-a", 2L, "B", "Burton-on-Trent", "coal_mine", "Coal Mine", 1, 0, 0, 4, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Burton-on-Trent",
                 "to", "Cannock"
@@ -746,7 +968,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Oxford", "canal")));
         replaceMerchant(state, "merchant_oxford", List.of("pottery"), 2, false);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "pottery-a",
                 "merchantId", "merchant_oxford"
@@ -773,7 +995,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Gloucester", "canal")));
         replaceMerchant(state, "merchant_gloucester", List.of("cotton_mill"), 1, false);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_gloucester",
@@ -796,7 +1018,7 @@ class BrassGameModuleTest {
         replaceMerchant(state, "merchant_gloucester", List.of("cotton_mill"), 1, false);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_gloucester",
@@ -830,7 +1052,7 @@ class BrassGameModuleTest {
         ));
         replaceMerchant(state, "merchant_nottingham", List.of("cotton_mill"), 1, false);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_nottingham"
@@ -850,7 +1072,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Warrington", "canal")));
         replaceMerchant(state, "merchant_warrington", List.of("cotton_mill"), 1, false);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_warrington"
@@ -871,7 +1093,7 @@ class BrassGameModuleTest {
         replaceMerchant(state, "merchant_oxford", List.of("pottery"), 1, false);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_oxford"
@@ -895,7 +1117,7 @@ class BrassGameModuleTest {
         replaceMerchant(state, "merchant_oxford", List.of("cotton_mill"), 0, false);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_oxford"
@@ -918,7 +1140,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "missing-card",
                 "tileId", "cotton-a"
         ), List.of()));
@@ -938,7 +1160,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "merchantId", "merchant_oxford"
@@ -956,7 +1178,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "beerSourceTileId", "beer-a"
@@ -973,11 +1195,14 @@ class BrassGameModuleTest {
                 tile("beer-a", 2L, "B", "Walsall", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Walsall", "canal")));
+        replaceMerchant(state, "merchant_birmingham", List.of("cotton_mill"), 1, false);
 
         state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
-                "beerSourceTileId", "beer-a"
+                "merchantId", "merchant_birmingham",
+                "resourceSelections", List.of(Map.of("type", "beer", "sourceType", "industry",
+                        "sourceId", "beer-a", "requirementIndex", 0, "amount", 1))
         ), List.of());
 
         List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
@@ -993,11 +1218,14 @@ class BrassGameModuleTest {
                 tile("cotton-a", 1L, "A", "Birmingham", "cotton_mill", "Cotton Mill", 0, 0, 0, 5, 5),
                 tile("beer-a", 1L, "A", "Derby", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
+        replaceMerchant(state, "merchant_birmingham", List.of("cotton_mill"), 1, false);
 
         state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
-                "beerSourceTileId", "beer-a"
+                "merchantId", "merchant_birmingham",
+                "resourceSelections", List.of(Map.of("type", "beer", "sourceType", "industry",
+                        "sourceId", "beer-a", "requirementIndex", 0, "amount", 1))
         ), List.of());
 
         List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
@@ -1017,12 +1245,15 @@ class BrassGameModuleTest {
                 tile("beer-a", 1L, "A", "Derby", "brewery", "Brewery", 0, 0, 1, 4, 4),
                 tile("beer-b", 1L, "A", "Nottingham", "brewery", "Brewery", 0, 0, 2, 4, 4)
         ));
+        replaceMerchant(state, "merchant_birmingham", List.of("cotton_mill"), 1, false);
 
         var targetState = state;
         assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
-                "beerSourceTileId", "beer-a"
+                "merchantId", "merchant_birmingham",
+                "resourceSelections", List.of(Map.of("type", "beer", "sourceType", "industry",
+                        "sourceId", "beer-a", "requirementIndex", 0, "amount", 1))
         ), List.of()));
 
         List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
@@ -1043,7 +1274,7 @@ class BrassGameModuleTest {
                 tile("beer-a", 1L, "A", "Derby", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a"
         ), List.of());
@@ -1093,11 +1324,11 @@ class BrassGameModuleTest {
                 card("b-skip-2", "location", "Nottingham", "Nottingham")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip-1"), List.of());
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip-2"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip-1"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip-2"), List.of());
         state = endTurn(module, state, 1L, "A");
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-1"), List.of());
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-2"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-1"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-2"), List.of());
         state = endTurn(module, state, 2L, "B");
 
         assertEquals(30, playerStat(state, "1", "lastIncome"));
@@ -1108,6 +1339,7 @@ class BrassGameModuleTest {
     void finalRoundCollectsNegativeIncomeBeforeEraMaintenanceAndResolvesDebt() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
+        state.put("round", 10);
         forceTestTurnOrder(state, List.of(1L, 2L));
         state.put("turnIndex", 1);
         state.put("currentPlayerId", 2L);
@@ -1132,7 +1364,7 @@ class BrassGameModuleTest {
         assertEquals(9, ((Map<?, ?>) state.get("incomeDebt")).get("amount"));
         assertEquals(List.of("resolve_income_debt"), availableActions(state));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"),
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"),
                 "resolve_income_debt", Map.of("tileId", "iron-a"), List.of());
 
         assertEquals(true, state.get("eraEnding"));
@@ -1153,7 +1385,7 @@ class BrassGameModuleTest {
         assertTrue(List.of("red", "yellow", "blue", "purple").contains(playerColor));
 
         state = startSecondRoundFromState(module, state);
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", firstCardId(state, "1"),
                 "from", "Birmingham",
                 "to", "Walsall"
@@ -1165,7 +1397,7 @@ class BrassGameModuleTest {
     }
 
     @Test
-    void endTurnEntersEraEndingWhenDeckAndHandsAreEmpty() {
+    void endTurnDoesNotEndEraEarlyWhenDeckAndHandsAreEmpty() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
         forceTestTurnOrder(state, List.of(2L, 1L));
@@ -1178,8 +1410,8 @@ class BrassGameModuleTest {
         ));
         replaceHand(state, "2", List.of());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "last-card-1"), List.of());
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "last-card-2"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "last-card-1"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "last-card-2"), List.of());
         assertEquals(true, ((Map<?, ?>) state.get("turn")).get("awaitingEndTurn"));
         assertTrue(availableActions(state).contains("restart_turn"));
         assertTrue(availableActions(state).contains("end_turn"));
@@ -1187,10 +1419,10 @@ class BrassGameModuleTest {
 
         state = endTurn(module, state, 1L, "A");
 
-        assertEquals(true, state.get("eraEnding"));
-        assertEquals(true, state.get("canMaintainEra"));
-        assertEquals(1L, state.get("currentPlayerId"));
-        assertEquals(List.of("maintain_era"), availableActions(state));
+        assertEquals(false, state.get("eraEnding"));
+        assertEquals(false, state.get("canMaintainEra"));
+        assertEquals(3, state.get("round"));
+        assertEquals(2L, state.get("currentPlayerId"));
     }
 
     @Test
@@ -1207,6 +1439,70 @@ class BrassGameModuleTest {
     }
 
     @Test
+    void eraEndsAtFixedRoundLimitAfterIncomeSettlement() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        state.put("round", 10);
+        forceTestTurnOrder(state, List.of(2L, 1L));
+        state.put("turnIndex", 1);
+        state.put("currentPlayerId", 1L);
+        state.put("deck", List.of());
+        replaceHand(state, "1", List.of(card("last-card", "location", "Birmingham", "Birmingham")));
+        replaceHand(state, "2", List.of());
+        Map<String, Object> turn = new LinkedHashMap<>();
+        turn.put("actionsAllowed", 2);
+        turn.put("actionsRemaining", 0);
+        turn.put("actionsTaken", 2);
+        turn.put("awaitingEndTurn", true);
+        state.put("turn", turn);
+        state.put("availableActions", invokeAvailableActions(module, state));
+
+        state = endTurn(module, state, 1L, "A");
+
+        assertEquals("canal", state.get("era"));
+        assertEquals(10, state.get("round"));
+        assertEquals(true, state.get("eraEnding"));
+        assertEquals(true, state.get("canMaintainEra"));
+        assertEquals(List.of("maintain_era"), availableActions(state));
+    }
+
+    @Test
+    void finalRailRoundStillReordersPlayersButSkipsIncomeAndIncomeDebt() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        state.put("era", "rail");
+        state.put("round", 10);
+        forceTestTurnOrder(state, List.of(2L, 1L));
+        state.put("turnIndex", 1);
+        state.put("currentPlayerId", 1L);
+        state.put("deck", List.of());
+        replaceHand(state, "1", List.of());
+        replaceHand(state, "2", List.of());
+        setPlayerStat(state, "1", "spentThisRound", 0);
+        setPlayerStat(state, "2", "spentThisRound", 5);
+        setPlayerStat(state, "1", "incomeLevel", 0);
+        setPlayerStat(state, "1", "money", 1);
+        setPlayerStat(state, "1", "lastIncome", 17);
+        setPlayerStat(state, "1", "victoryPoints", 3);
+        Map<String, Object> turn = new LinkedHashMap<>();
+        turn.put("awaitingEndTurn", true);
+        turn.put("actionsTaken", 2);
+        state.put("turn", turn);
+        state.put("availableActions", invokeAvailableActions(module, state));
+
+        state = endTurn(module, state, 1L, "A");
+
+        assertEquals(List.of(1L, 2L), state.get("turnOrder"));
+        assertEquals("rail", state.get("era"));
+        assertEquals(10, state.get("round"));
+        assertEquals(true, state.get("eraEnding"));
+        assertEquals(1, playerStat(state, "1", "money"));
+        assertEquals(17, playerStat(state, "1", "lastIncome"));
+        assertEquals(3, playerStat(state, "1", "victoryPoints"));
+        assertTrue(((Map<?, ?>) state.get("incomeDebt")).isEmpty());
+    }
+
+    @Test
     void railNetworkConsumesCoalFromMarket() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
@@ -1214,7 +1510,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
         replaceLinks(state, List.of(link("market-link", 2L, "B", "Birmingham", "Oxford", "canal")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall"
@@ -1234,7 +1530,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("market-link", 2L, "B", "Birmingham", "Oxford", "canal")));
         ((Map<String, Object>) state.get("market")).put("coal", new java.util.ArrayList<>());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall"
@@ -1257,7 +1553,7 @@ class BrassGameModuleTest {
                 tile("coal-a", 1L, "A", "Birmingham", "coal_mine", "Coal Mine", 1, 0, 0, 4, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall",
@@ -1279,7 +1575,7 @@ class BrassGameModuleTest {
                 tile("coal-a", 2L, "B", "Walsall", "coal_mine", "Coal Mine", 1, 0, 0, 4, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall",
@@ -1301,13 +1597,17 @@ class BrassGameModuleTest {
                 tile("beer-a", 2L, "B", "Wolverhampton", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "routes", List.of(
-                        Map.of("from", "Birmingham", "to", "Dudley", "coalSourceTileId", "coal-a"),
-                        Map.of("from", "Dudley", "to", "Wolverhampton", "coalSourceTileId", "coal-a")
+                        Map.of("from", "Birmingham", "to", "Dudley"),
+                        Map.of("from", "Dudley", "to", "Wolverhampton")
                 ),
-                "beerSourceTileId", "beer-a"
+                "resourceSelections", List.of(
+                        Map.of("type", "coal", "sourceType", "industry", "sourceId", "coal-a", "requirementIndex", 0, "amount", 1),
+                        Map.of("type", "coal", "sourceType", "industry", "sourceId", "coal-a", "requirementIndex", 1, "amount", 1),
+                        Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-a", "requirementIndex", 2, "amount", 1)
+                )
         ), List.of());
 
         List<?> links = (List<?>) ((Map<?, ?>) state.get("board")).get("links");
@@ -1330,7 +1630,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
                 new UserSummary(1, "A"), "network", Map.of(
                         "cardId", "card-a",
                         "routes", List.of(
@@ -1347,6 +1647,74 @@ class BrassGameModuleTest {
     }
 
     @Test
+    void explicitDoubleRailFirstCoalMustBeReachableAfterFirstLinkOnly() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        state.put("era", "rail");
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        replaceIndustries(state, List.of(
+                tile("coal-a", 2L, "B", "Wolverhampton", "coal_mine", "Coal Mine", 2, 0, 0, 4, 3),
+                tile("beer-a", 1L, "A", "Birmingham", "brewery", "Brewery", 0, 0, 1, 4, 4)
+        ));
+
+        var targetState = state;
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState,
+                new UserSummary(1, "A"), "network", Map.of(
+                        "cardId", "card-a",
+                        "routes", List.of(
+                                Map.of("from", "Birmingham", "to", "Dudley"),
+                                Map.of("from", "Dudley", "to", "Wolverhampton")
+                        ),
+                        "resourceSelections", List.of(
+                                Map.of("type", "coal", "sourceType", "industry", "sourceId", "coal-a", "requirementIndex", 0, "amount", 1),
+                                Map.of("type", "coal", "sourceType", "industry", "sourceId", "coal-a", "requirementIndex", 1, "amount", 1),
+                                Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-a", "requirementIndex", 2, "amount", 1)
+                        )
+                ), List.of()));
+
+        assertEquals(0, ((List<?>) ((Map<?, ?>) state.get("board")).get("links")).size());
+        assertEquals(2, ((Map<?, ?>) ((List<?>) ((Map<?, ?>) state.get("board")).get("industries")).getFirst()).get("coal"));
+        assertEquals(17, playerStat(state, "1", "money"));
+        assertEquals(1, handSize(state, "1"));
+    }
+
+    @Test
+    void explicitDoubleRailCountsSharedFreeCoalOnceThenAllowsMarketCoal() {
+        BrassGameModule module = new BrassGameModule();
+        var state = startSecondRound(module);
+        state.put("era", "rail");
+        setPlayerStat(state, "1", "money", 100);
+        replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
+        replaceIndustries(state, List.of(
+                tile("coal-a", 2L, "B", "Dudley", "coal_mine", "Coal Mine", 1, 0, 0, 4, 3),
+                tile("beer-a", 1L, "A", "Birmingham", "brewery", "Brewery", 0, 0, 1, 4, 4)
+        ));
+        // Market coal is legal only after the second new link reaches this public market path.
+        replaceLinks(state, List.of(link("market-path", 2L, "B", "Wolverhampton", "Shrewsbury", "rail")));
+        int marketCoalCount = ((List<?>) ((Map<?, ?>) state.get("market")).get("coal")).size();
+
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "network", Map.of(
+                "cardId", "card-a",
+                "routes", List.of(
+                        Map.of("from", "Birmingham", "to", "Dudley"),
+                        Map.of("from", "Dudley", "to", "Wolverhampton")
+                ),
+                "resourceSelections", List.of(
+                        Map.of("type", "coal", "sourceType", "industry", "sourceId", "coal-a", "requirementIndex", 0, "amount", 1),
+                        Map.of("type", "coal", "sourceType", "market", "sourceId", "market:coal", "requirementIndex", 1, "amount", 1),
+                        Map.of("type", "beer", "sourceType", "industry", "sourceId", "beer-a", "requirementIndex", 2, "amount", 1)
+                )
+        ), List.of());
+
+        List<?> links = (List<?>) ((Map<?, ?>) state.get("board")).get("links");
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        assertEquals(3, links.size());
+        assertEquals(0, ((Map<?, ?>) industries.get(0)).get("coal"));
+        assertEquals(0, ((Map<?, ?>) industries.get(1)).get("beer"));
+        assertEquals(marketCoalCount - 1, ((List<?>) ((Map<?, ?>) state.get("market")).get("coal")).size());
+    }
+
+    @Test
     void railNetworkRejectsDisconnectedOtherPlayerBeer() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
@@ -1357,7 +1725,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "routes", List.of(
                         Map.of("from", "Birmingham", "to", "Walsall"),
@@ -1382,7 +1750,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall",
@@ -1405,7 +1773,7 @@ class BrassGameModuleTest {
         int marketCoalCount = ((List<?>) ((Map<?, ?>) state.get("market")).get("coal")).size();
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "from", "Birmingham",
                 "to", "Walsall",
@@ -1425,7 +1793,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "missing-card",
                 "from", "Birmingham",
                 "to", "Walsall"
@@ -1443,7 +1811,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "routes", List.of(
                         Map.of("from", "Birmingham", "to", "Walsall"),
@@ -1464,7 +1832,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "routes", List.of(
                         Map.of("from", "Birmingham", "to", "Walsall"),
@@ -1490,7 +1858,7 @@ class BrassGameModuleTest {
         replaceLinks(state, links);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "network", Map.of(
                 "cardId", "card-a",
                 "routes", List.of(
                         Map.of("from", "Birmingham", "to", "Walsall"),
@@ -1512,7 +1880,7 @@ class BrassGameModuleTest {
                 card("card-b", "location", "Leek", "Leek")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine")
         ), List.of());
@@ -1521,7 +1889,7 @@ class BrassGameModuleTest {
         assertEquals(15, playerStat(state, "1", "money"));
         assertEquals(6, playerBoardCount(state, "1", "coal_mine"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-b",
                 "city", "Leek",
                 "industryType", "coal_mine"
@@ -1542,7 +1910,7 @@ class BrassGameModuleTest {
                 tile("iron-a", 2L, "B", "Birmingham", "iron_works", "Iron Works", 0, 1, 0, 3, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine"),
                 "ironSourceTileId", "iron-a"
@@ -1566,7 +1934,10 @@ class BrassGameModuleTest {
         assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine"),
-                "ironSourceTileId", "iron-a"
+                "resourceSelections", List.of(Map.of(
+                        "type", "iron", "sourceType", "industry", "sourceId", "iron-a",
+                        "requirementIndex", 0, "amount", 1
+                ))
         ), List.of()));
 
         assertEquals(0, developmentValue(state, "1", "coal_mine"));
@@ -1582,7 +1953,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
         ((Map<String, Object>) state.get("market")).put("iron", new java.util.ArrayList<>());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine")
         ), List.of());
@@ -1598,7 +1969,7 @@ class BrassGameModuleTest {
         var state = startSecondRound(module);
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("iron_works", "iron_works")
         ), List.of());
@@ -1615,7 +1986,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "missing-card",
                 "industryTypes", List.of("coal_mine")
         ), List.of()));
@@ -1633,7 +2004,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine", "iron_works", "brewery")
         ), List.of()));
@@ -1654,7 +2025,7 @@ class BrassGameModuleTest {
         setPlayerStat(state, "1", "money", 6);
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("coal_mine", "iron_works")
         ), List.of()));
@@ -1674,7 +2045,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("pottery")
         ), List.of()));
@@ -1694,7 +2065,7 @@ class BrassGameModuleTest {
         replacePlayerBoardTiles(state, "1", "pottery", List.of(levelThreePottery));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "develop", Map.of(
                 "cardId", "card-a",
                 "industryTypes", List.of("pottery")
         ), List.of()));
@@ -1717,7 +2088,7 @@ class BrassGameModuleTest {
         int initialDiscardCount = ((List<?>) state.get("discardPile")).size();
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
                 "cardIds", List.of("card-a", "card-a", "card-b")
         ), List.of()));
 
@@ -1737,7 +2108,7 @@ class BrassGameModuleTest {
         ));
         int initialDiscardCount = ((List<?>) state.get("discardPile")).size();
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "scout", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "scout", Map.of(
                 "cardIds", List.of("card-a", "card-b", "card-c")
         ), List.of());
 
@@ -1762,7 +2133,7 @@ class BrassGameModuleTest {
         int initialDiscardCount = ((List<?>) state.get("discardPile")).size();
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
                 "cardIds", List.of("card-a", "card-b", "card-c")
         ), List.of()));
 
@@ -1785,7 +2156,7 @@ class BrassGameModuleTest {
         int initialDiscardCount = ((List<?>) state.get("discardPile")).size();
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "scout", Map.of(
                 "cardIds", List.of("card-a", "card-b", "wild-industry")
         ), List.of()));
 
@@ -1817,7 +2188,7 @@ class BrassGameModuleTest {
         replacePlayerBoardTiles(state, "1", "manufacturer", List.of(boardTile("manufacturer_rail_only", "manufacturer", 2, 2)));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "manufacturer"
@@ -1839,7 +2210,7 @@ class BrassGameModuleTest {
         ((Map<String, Object>) state.get("market")).put("coal", new java.util.ArrayList<>());
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "manufacturer"
@@ -1859,7 +2230,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Leek", "Oxford", "canal")));
         ((Map<String, Object>) state.get("market")).put("coal", new java.util.ArrayList<>());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Leek",
                 "industryType", "coal_mine"
@@ -1880,7 +2251,7 @@ class BrassGameModuleTest {
         replaceLinks(state, List.of(link("market-link", 2L, "B", "Birmingham", "Oxford", "canal")));
         ((Map<String, Object>) state.get("market")).put("iron", new java.util.ArrayList<>());
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "iron_works"
@@ -1921,7 +2292,7 @@ class BrassGameModuleTest {
         assertTrue(birminghamManufacturerOptions.stream()
                 .anyMatch(option -> ((Number) ((Map<?, ?>) option).get("slotIndex")).intValue() == 1));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "manufacturer"
@@ -1939,7 +2310,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Birmingham", "Birmingham")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Birmingham",
                 "industryType", "manufacturer",
@@ -1960,7 +2331,7 @@ class BrassGameModuleTest {
                 tileWithSlot("iron-b", 2L, "B", "Stoke-on-Trent", "iron_works", "Iron Works", 1, 0, 0, 0, 3, 3)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Stoke-on-Trent",
                 "industryType", "iron_works"
@@ -1996,7 +2367,7 @@ class BrassGameModuleTest {
                 .orElseThrow();
         assertEquals(true, option.get("coversOwn"));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "brewery-card",
                 "city", "Stone",
                 "industryType", "brewery",
@@ -2012,7 +2383,7 @@ class BrassGameModuleTest {
     }
 
     @Test
-    void buildCannotCoverOwnUnflippedOrSameLevelIndustry() {
+    void buildCanCoverOwnUnflippedSameLevelIndustry() {
         BrassGameModule module = new BrassGameModule();
         var state = startSecondRound(module);
         Map<String, Object> breweryCard = card("brewery-card", "industry", "brewery", "Industry: Brewery");
@@ -2024,17 +2395,21 @@ class BrassGameModuleTest {
                 0, 0, 0, 0, 5, 0
         );
         sameLevelBrewery.put("level", 2);
-        sameLevelBrewery.put("flipped", true);
+        sameLevelBrewery.put("flipped", false);
         replaceIndustries(state, List.of(sameLevelBrewery));
 
-        var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState,
+        state = runAction(module, room(), seats(), module.defaultConfig(), state,
                 new UserSummary(1, "A"), "build", Map.of(
                         "cardId", "brewery-card",
                         "city", "Stone",
                         "industryType", "brewery",
                         "slotIndex", 0
-                ), List.of()));
+                ), List.of());
+        List<?> industries = (List<?>) ((Map<?, ?>) state.get("board")).get("industries");
+        assertEquals(1, industries.size());
+        assertEquals(2, ((Map<?, ?>) industries.getFirst()).get("level"));
+        assertFalse(industries.stream().map(Map.class::cast)
+                .anyMatch(tile -> "brewery-level-2-built".equals(tile.get("id"))));
     }
 
     @Test
@@ -2094,6 +2469,7 @@ class BrassGameModuleTest {
                 tile("disconnected-beer", 2L, "B", "Derby", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
         replaceLinks(state, List.of(link("link-a", 2L, "B", "Birmingham", "Walsall", "canal")));
+        replaceMerchant(state, "merchant_birmingham", List.of("cotton_mill"), 1, false);
 
         Map<?, ?> available = invokeAvailableActions(module, state);
         Map<?, ?> sellTile = ((List<?>) available.get("sellTiles")).stream()
@@ -2101,7 +2477,12 @@ class BrassGameModuleTest {
                 .filter(tile -> "cotton-a".equals(tile.get("id")))
                 .findFirst()
                 .orElseThrow();
-        List<String> beerSourceIds = ((List<?>) sellTile.get("beerSources")).stream()
+        Map<?, ?> market = ((List<?>) sellTile.get("merchantSources")).stream()
+                .map(Map.class::cast)
+                .filter(merchant -> "merchant_birmingham".equals(merchant.get("id")))
+                .findFirst()
+                .orElseThrow();
+        List<String> beerSourceIds = ((List<?>) market.get("beerSources")).stream()
                 .map(Map.class::cast)
                 .map(source -> String.valueOf(source.get("id")))
                 .toList();
@@ -2221,7 +2602,7 @@ class BrassGameModuleTest {
                 tile("beer-a", 1L, "A", "Birmingham", "brewery", "Brewery", 0, 0, 1, 4, 4)
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "sell", Map.of(
                 "cardId", "card-a",
                 "tileId", "cotton-a",
                 "beerSourceTileId", "beer-a"
@@ -2243,7 +2624,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Stoke-on-Trent",
                 "industryType", "iron_works"
@@ -2267,7 +2648,7 @@ class BrassGameModuleTest {
         ));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Stoke-on-Trent",
                 "industryType", "iron_works"
@@ -2285,7 +2666,7 @@ class BrassGameModuleTest {
         replaceHand(state, "1", List.of(card("card-a", "location", "Brewery", "Brewery")));
 
         var targetState = state;
-        assertThrows(RuntimeException.class, () -> module.onAction(room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
+        assertThrows(RuntimeException.class, () -> runAction(module, room(), seats(), module.defaultConfig(), targetState, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "card-a",
                 "city", "Brewery",
                 "industryType", "brewery"
@@ -2306,15 +2687,15 @@ class BrassGameModuleTest {
                 card("b-skip-2", "location", "Nottingham", "Nottingham")
         ));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "build", Map.of(
                 "cardId", "a-build",
                 "city", "Birmingham",
                 "industryType", "cotton_mill"
         ), List.of());
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", "a-skip"), List.of());
         state = endTurn(module, state, 1L, "A");
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-1"), List.of());
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-2"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-1"), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", "b-skip-2"), List.of());
         state = endTurn(module, state, 2L, "B");
 
         assertEquals(3, state.get("round"));
@@ -2338,7 +2719,7 @@ class BrassGameModuleTest {
         ));
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Walsall", "canal")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
 
         assertEquals("rail", state.get("era"));
         assertEquals(1, state.get("round"));
@@ -2369,7 +2750,7 @@ class BrassGameModuleTest {
         railBrewery.put("era", "rail");
         replaceIndustries(state, List.of(coal, iron, cotton, manufacturer, brewery, pottery, levelTwoCotton, railBrewery));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
 
         List<String> remainingIds = ((List<Map<String, Object>>) ((Map<String, Object>) state.get("board")).get("industries")).stream()
                 .map(tile -> (String) tile.get("id"))
@@ -2401,7 +2782,7 @@ class BrassGameModuleTest {
         oxfordBefore.put("used", true);
         replaceMerchant(state, "merchant_blank", List.of("cotton_mill"), 0, true);
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
 
         List<Map<String, Object>> merchants = (List<Map<String, Object>>) ((Map<String, Object>) state.get("market")).get("beerMerchants");
         Map<String, Object> oxford = merchants.stream()
@@ -2427,7 +2808,7 @@ class BrassGameModuleTest {
         ));
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Oxford", "canal")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
 
         assertEquals(8, playerStat(state, "1", "victoryPoints"));
     }
@@ -2469,7 +2850,7 @@ class BrassGameModuleTest {
         ));
         replaceLinks(state, List.of(link("link-a", 1L, "A", "Birmingham", "Walsall", "rail")));
 
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "maintain_era", Map.of(), List.of());
 
         assertEquals("finished", state.get("phase"));
         assertEquals(1, ((List<?>) state.get("winners")).size());
@@ -2504,10 +2885,43 @@ class BrassGameModuleTest {
         return startSecondRoundFromState(module, state);
     }
 
+    /**
+     * Most historical Brass tests cover game-rule outcomes, not the retired
+     * request shape. Only this test fixture invokes the rule handlers with automatic
+     * simulation planning. Production actions always require explicit selections.
+     * New API-contract tests call module.onAction directly.
+     */
+    private Map<String, Object> runAction(BrassGameModule module, RoomEntity room, List<RoomSeat> seats,
+                                          Map<String, Object> config, Map<String, Object> state, UserSummary actor,
+                                          String actionType, Map<String, Object> payload, List<String> notices) {
+        if (List.of("build", "develop", "sell", "network").contains(actionType)
+                && !payload.containsKey("resourceSelections")) {
+            return legacyRuleFixture(state, actor, BrassActionCommand.decode(actionType, payload));
+        }
+        return module.onAction(room, seats, config, state, actor, actionType, payload, notices);
+    }
+
+    private Map<String, Object> legacyRuleFixture(Map<String, Object> original, UserSummary actor, BrassActionCommand command) {
+        Map<String, Object> state = BrassStateDocument.executionCopy(original);
+        var flow = BrassFlowAdapter.gameState(state);
+        if (flow.phase() == BrassGameState.Phase.WAITING || flow.phase() == BrassGameState.Phase.FINISHED)
+            throw new ApiException(org.springframework.http.HttpStatus.BAD_REQUEST, "当前不在游戏进行阶段");
+        if (flow.currentPlayerId() != actor.id()) throw new ApiException(org.springframework.http.HttpStatus.BAD_REQUEST, "当前不是你的回合");
+        state = switch (command.type()) {
+            case BUILD -> BrassBuildAction.buildAction(state, actor, command, BrassExecutionMode.SIMULATE);
+            case DEVELOP -> BrassDevelopAction.developAction(state, actor, command, BrassExecutionMode.SIMULATE);
+            case SELL -> BrassSellAction.sellAction(state, actor, command, BrassExecutionMode.SIMULATE);
+            case NETWORK -> BrassNetworkAction.networkAction(state, actor, command, BrassExecutionMode.SIMULATE);
+            default -> throw new AssertionError("Not a historical resource fixture");
+        };
+        BrassStateProjection.updateMaintenanceFlag(state);
+        return state;
+    }
+
     private Map<String, Object> startSecondRoundFromState(BrassGameModule module, Map<String, Object> state) {
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(1, "A"), "skip", Map.of("cardId", firstCardId(state, "1")), List.of());
         state = endTurn(module, state, 1L, "A");
-        state = module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", firstCardId(state, "2")), List.of());
+        state = runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(2, "B"), "skip", Map.of("cardId", firstCardId(state, "2")), List.of());
         return endTurn(module, state, 2L, "B");
     }
 
@@ -2531,7 +2945,7 @@ class BrassGameModuleTest {
     }
 
     private Map<String, Object> endTurn(BrassGameModule module, Map<String, Object> state, long playerId, String username) {
-        return module.onAction(room(), seats(), module.defaultConfig(), state, new UserSummary(playerId, username), "end_turn", Map.of(), List.of());
+        return runAction(module, room(), seats(), module.defaultConfig(), state, new UserSummary(playerId, username), "end_turn", Map.of(), List.of());
     }
 
     @SuppressWarnings("unchecked")
@@ -2742,23 +3156,11 @@ class BrassGameModuleTest {
     }
 
     private Map<?, ?> invokeAvailableActions(BrassGameModule module, Map<String, Object> state) {
-        try {
-            java.lang.reflect.Method method = BrassGameModule.class.getDeclaredMethod("availableActions", Map.class);
-            method.setAccessible(true);
-            return (Map<?, ?>) method.invoke(module, state);
-        } catch (ReflectiveOperationException exception) {
-            throw new AssertionError(exception);
-        }
+        return BrassActionQueryService.availableActions(state);
     }
 
     private void invokeRefreshDerivedState(BrassGameModule module, Map<String, Object> state) {
-        try {
-            java.lang.reflect.Method method = BrassGameModule.class.getDeclaredMethod("refreshBrassDerivedState", Map.class);
-            method.setAccessible(true);
-            method.invoke(module, state);
-        } catch (ReflectiveOperationException exception) {
-            throw new AssertionError(exception);
-        }
+        BrassStateProjection.refreshBrassDerivedState(state);
     }
 
     private int playerBoardCount(Map<String, Object> state, String playerId, String industryType) {

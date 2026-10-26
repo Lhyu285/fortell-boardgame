@@ -36,5 +36,9 @@ public interface GameModule {
             List<String> notices
     );
 
+    default Map<String, Object> stateForViewer(Map<String, Object> state, UserSummary viewer) {
+        return state;
+    }
+
     List<String> rules();
 }

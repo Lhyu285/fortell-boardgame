@@ -19,6 +19,7 @@
     <properties>
         <java.version>21</java.version>
         <maven.compiler.release>21</maven.compiler.release>
+        <boardgame.build.directory>${project.basedir}/target</boardgame.build.directory>
     </properties>
 
     <dependencies>
@@ -54,6 +55,7 @@
     </dependencies>
 
     <build>
+        <directory>${boardgame.build.directory}</directory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

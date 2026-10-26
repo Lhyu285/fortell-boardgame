@@ -1,0 +1,683 @@
+{
+  "sourceHash": "e8d1d31b3e29abd3454b7ccdae0673614dc101dcd7f1ac580c88328e6ba903fe",
+  "declarations": [
+    {
+      "name": "TEXT",
+      "file": "src/features/rooms/roomText.js",
+      "hash": "59ecb596bce46a02ff354fe69f4eb4f52de8cbbd43fdfaeb9ed3573b5a90d3bf"
+    },
+    {
+      "name": "MOVE_LABELS",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "dbc2647ae9330e21fecd07358c83007316fad34b63c5aa2ad89d9adf02152a70"
+    },
+    {
+      "name": "THINGS_AREAS",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "12d682515140d4862524de0d8c8105264bd02835bdfb79cc26ec35371560c9c8"
+    },
+    {
+      "name": "CAMEL_COLORS",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "fc1723f0e89a5287f61120220456eb3f051c7b3717b660b137eef83f29b2bac8"
+    },
+    {
+      "name": "BRASS_CITIES",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "dd3e7341b79d50659383abd062fe05c8bb227dbecd16bebb46d0bda6c1ddf693"
+    },
+    {
+      "name": "BRASS_INDUSTRIES",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "073f045ac70b2703ddde844a5a5ea0bb62afa62955fc661525cec0ed454ac2f7"
+    },
+    {
+      "name": "BRASS_PLAYER_COLORS",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "f87f58f0c2d7055d434f34544a1a979733ee9542cc2c699cdb40f8b7250f6a35"
+    },
+    {
+      "name": "GAME_LABELS",
+      "file": "src/features/rooms/roomText.js",
+      "hash": "dd465f845ef95ff3b0d8cae51a39916d009bbfe42f8e79e3c18ff70aad7be026"
+    },
+    {
+      "name": "BRASS_CITY_CN",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "47fb4b81340905dbb850feddfb5c1e35c68cf968bcb4feb61d1878de9251cdcb"
+    },
+    {
+      "name": "RoomPage",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "b4af39c8a40846f7741c1da47a4646caec80ef77cfe528062066b5d98dd2b750"
+    },
+    {
+      "name": "PrepareRoom",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "1ab9b297a694b1b0fa58d6af740875f12190dc7e9e6daa49934be75f0b691668"
+    },
+    {
+      "name": "RpsSettings",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "2b77d46228ed0040dd5ee8a3ed48b6f15b9c8325be24915d943aecd17752cba2"
+    },
+    {
+      "name": "ThingsSettings",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "31c9a0782874a849d0c76d371af6b15e39bdbb2e155a49bfc433c554992f83b7"
+    },
+    {
+      "name": "CamelSettings",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "ebe0be4e93bc6bcd7e73cd09aa22e71d4bdcccb44279089898a43df9ca56a3fb"
+    },
+    {
+      "name": "GameErrorBoundary",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "07c3752d91804d590d4b1b17c70b49ae08f9e23f757333d2705c4b1655a9d291"
+    },
+    {
+      "name": "ThingsInRingsRoom",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "87811a3f362fa7cc3a79f164bffa8aaa7531280f415003470476dd070d86ce5e"
+    },
+    {
+      "name": "CamelUpCardsRoom",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "8875d13135e6f9d95f29ef3d2992e9564e940262c91a04af63c8d40aa80d6448"
+    },
+    {
+      "name": "IncanGoldRoom",
+      "file": "src/games/incan-gold/IncanGoldRoom.jsx",
+      "hash": "b0649b71527b3e181ff2aa5c795b9c3a132c86b8fdedf1e59946642f6705ada8"
+    },
+    {
+      "name": "IncanTreasureValue",
+      "file": "src/games/incan-gold/IncanGoldRoom.jsx",
+      "hash": "ec1bf9d2e9006bdeb4c85b382e6c8e832044262f08f7191575eed22d04838397"
+    },
+    {
+      "name": "incanCardTypeText",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "59c51b37fdcd1a650d0f749b6d96593c1db554a532cfc470f64d4f43f9f65e81"
+    },
+    {
+      "name": "IncanSettlementSummary",
+      "file": "src/games/incan-gold/IncanGoldRoom.jsx",
+      "hash": "fe8c09c067afb91ef04786f18213d3c6a5f5c5ca6b74700f6db5e1b7d137cc70"
+    },
+    {
+      "name": "IncanDisasterSummary",
+      "file": "src/games/incan-gold/IncanGoldRoom.jsx",
+      "hash": "0a7c982b882336a11326262c1a4aaf37804c1b8288874f8da16a2a5bfc5d6b20"
+    },
+    {
+      "name": "GobangSettings",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "29580a278a4b29ca722fc97f7b41f3ee1ef8f7adc2e5bb84281a49962afef95b"
+    },
+    {
+      "name": "SettingsToggle",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "5952817581e16867f2e84d646a4a3b47c7100ce54e3912d539991128cc7e1e4f"
+    },
+    {
+      "name": "BrassRoom",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "7a020c1a9cd8f5924f4bdbe9a110fd1f912333d6bcb65a678cfa9a206ef6720c"
+    },
+    {
+      "name": "BrassMap",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "0b3d8ca3e57ef297ffa3a74cf1c06f388fbc0ae3b59f2d1538af4d093c18a247"
+    },
+    {
+      "name": "BrassMapInfoPanel",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "473812172437e73f9aa745f81d19b44cd1ec78b519db3c44cc533e5f097b1fc5"
+    },
+    {
+      "name": "CardHintModal",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "05e32b151415ac587746d17d779f012c2882247740119d19712cc06ac385ecfe"
+    },
+    {
+      "name": "BrassMarket",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "41491a8ba3a78078a9f9f10dde32844008051f61ce19e67d0dfbf0b06466e881"
+    },
+    {
+      "name": "BrassMarketTrack",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "84d357529ab273327bbdef2c9857627667cf2d7a2a0ef9c4c48fb4552ac976f5"
+    },
+    {
+      "name": "BrassPlayerTable",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "fc18d6452d3b5ba948d636838295e87a91e8b817c6d9cb9555cf7fe635d0de2c"
+    },
+    {
+      "name": "BrassPlayerBoards",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "81a3d1ea0b9bc7d0b5577c129f1341f70aea29f84736b1d94d8421032360f6a6"
+    },
+    {
+      "name": "IncanGoldSettings",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "ffe8cdb250e27f372b8385ad9da6d1e6898ce23b190aa6fdc8422a00385dd6f3"
+    },
+    {
+      "name": "BrassPersonalBoard",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "4e613acab4a8f47fc318d6f67c16682a11c1985cf8aea20ac232f38447475a95"
+    },
+    {
+      "name": "BrassPlayerCards",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "c66cf0364c8f765530d442dad1d25fcaa928bc55f14e4b8cfd298ac26f984cca"
+    },
+    {
+      "name": "BrassPlayerCard",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "796af2d8396a0a0bf7b01a505c89a081f259054da41c1d4f7c24ad4bac75584e"
+    },
+    {
+      "name": "CamelPlayersPanel",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "d88db5c2447a47c1586eba4408e5d24136d1c27090f8003f08494ea401986559"
+    },
+    {
+      "name": "buildBrassResourceRequirements",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "5c13ea5493680372f75eb06ec14a723a2f822ef83023a4e02f4082e402a89a92"
+    },
+    {
+      "name": "BrassResourceSelectionPanel",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "810293ea6138f44143cfebe55579d3dbb4e26f20895fb4038dc9ade3b8a5fe18"
+    },
+    {
+      "name": "ResourceSelectionPanel",
+      "file": "src/games/brass/BrassRoom.jsx",
+      "hash": "dda23ab88e44a9adeddb1d0637243a3e756f406a87f17eba5b03c2d423f1bd9d"
+    },
+    {
+      "name": "resourceSourcesForSelect",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "6e87b9925016da986f3bff1142694fa23dd618a259b94544106353789f4b5af4"
+    },
+    {
+      "name": "buildConfirmText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "d43ee9f02ca8a76a148505d981b6dd37f62d721b706e02cc621dafc31b55d90c"
+    },
+    {
+      "name": "sellConfirmText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "3e3eb785540b385f1e3a88a618cd1950da97fd6954f12c9712336f84317ba0f6"
+    },
+    {
+      "name": "CamelRankings",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "77a22390f5364d4bb8a4f3fb614e6835c8cf21bff3e2ebefbe6ee351a15cb113"
+    },
+    {
+      "name": "CamelSetupPanel",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "a1031379c88ddfb7729eeb19bcf7875ae664ea00847f060b9abeed7772ca57f9"
+    },
+    {
+      "name": "CamelTrack",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "c7aef5c464bfcd8f3a905cbf38ea129d47d88739d041dfe1cba5a989a5bbc9b2"
+    },
+    {
+      "name": "CamelBetMarket",
+      "file": "src/games/camel-up-cards/CamelUpCardsRoom.jsx",
+      "hash": "855c43d384840e4f68b2922854e64f405e256cace61dce8e33ada0e56f4dde64"
+    },
+    {
+      "name": "ThingsRulesPanel",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "a40e583448546c89fc6d66f11d2783a59a668c5929982a8f50e4ddab7eab5d7d"
+    },
+    {
+      "name": "RuleBox",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "403620b5d2f518b5a13cafe972952337601af9acadea9d81e44825e5a09c2fe4"
+    },
+    {
+      "name": "HostActionPanel",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "980888f0cfb960190994c8a48a194a9a34c354ab0aa82b1c8cdb7c1468419988"
+    },
+    {
+      "name": "ThingsPlayersPanel",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "15b60232105895a2acacc16147df233a03478138432e4b3488cafa86bf5f39a0"
+    },
+    {
+      "name": "ThingsAreaBoard",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "74766c008e32c94f2fc0a7d782b92277880e2b4f569a8e675ed849f8d97a10fd"
+    },
+    {
+      "name": "ThingsFinalSummary",
+      "file": "src/games/things-in-rings/ThingsInRingsRoom.jsx",
+      "hash": "f6ab68fedade1b4fa94d0d1611dad2927eea1326d145f2c38fc0934315bd8a10"
+    },
+    {
+      "name": "coloredAreaLabel",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "986ff996410b4c8fe1807a95be6b7a2468d2dcfb176a7dc7207326344d069828"
+    },
+    {
+      "name": "coloredAreaShortLabel",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "f4348796f6e55038d444703ede1c218e4f2babc8728c0782c7b175a7ea30392c"
+    },
+    {
+      "name": "SeatBoard",
+      "file": "src/features/rooms/RoomPanels.jsx",
+      "hash": "6fa7f06d367550ac25c514df81a346580d536a63b0299f28434271c28ad394ba"
+    },
+    {
+      "name": "NoticePanel",
+      "file": "src/features/rooms/RoomPanels.jsx",
+      "hash": "572a5d44bea494beffc1471c58264aaf503d3b7e2ab50c5fc3ae96118c401130"
+    },
+    {
+      "name": "labelFor",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "a7e4b4f48cc453712003ad0bba464d1e9b4db4d7bddfb3ce4df4bf7f266eba7e"
+    },
+    {
+      "name": "roomCurrentPlayerName",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "e3ba553ab8a78b6223e83069e88d0f8304709e4b14b7fb6192d5161b9d44e965"
+    },
+    {
+      "name": "createClientActionId",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "a50a4dfaa2457420904a81a8c1eeff8cb6b8675912f9b42d1a26969cc666e443"
+    },
+    {
+      "name": "camelPlayerName",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "c56bbccccc49d195fc47bf2ca94bcffd678883ba7658d3e216d370ca1929a609"
+    },
+    {
+      "name": "brassPlayerName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "6d78a4c90535adbe43bc6cac67dcdd2528d2111e0cc9574d9ab925177d00c6ab"
+    },
+    {
+      "name": "brassEraText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "339066d6a98cb155346433213e8f7413a8eae67cb60c248df1846071cde30cde"
+    },
+    {
+      "name": "brassActionText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "283a9c8bda9c9f393d06cf678470b2349ecf9055afcbbe602667cbf1b7c1cd5a"
+    },
+    {
+      "name": "brassCardKind",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "ccc9379f11e982ffc3ed58b60542f725ccc3624a3583ef7aed667e198544639c"
+    },
+    {
+      "name": "brassCardKindLabel",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "e7d03addd2ed9b17065638f35ae9873bd3c5c38ef6bdba2dcc7c04626a9c2276"
+    },
+    {
+      "name": "brassCardIcon",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "d56312c9117ae4349226840388a0ef6b8fca7cdec931028b0f919d0d5626ec26"
+    },
+    {
+      "name": "brassCardTypeText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "59f046de2831602795371684f0bd396ff6d09d0c97b28ef053480ad28a3c2c8f"
+    },
+    {
+      "name": "brassCardName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "dfbeb0fd70b8f4ac7bb814249438413ff63c448987120e83e9d88d3c516006b9"
+    },
+    {
+      "name": "brassCardShortName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "d6334488f77d919243b97e01669d06ce9472b869a56980b4531a6d7fa22adf00"
+    },
+    {
+      "name": "brassCardTitleStyle",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "b8ef68d4a9bce50f9852480e20f3d7ad6f04db8f26d701ece6a01ed3e844a73a"
+    },
+    {
+      "name": "brassMapColorToCss",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "423e994632f58fa847fdb6c2dc18af901775ffddfb15d69d328281c2f5decf10"
+    },
+    {
+      "name": "brassDevelopmentText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "f8e62b628009fe7acb7c6facd50cd9e43eef7dd09149853773994b698f33204f"
+    },
+    {
+      "name": "brassTurnOrderText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "4a9f2e03a7f70edcc6682acae98409d88e98a37677d5df1aae5b7bb0d0aa38f8"
+    },
+    {
+      "name": "orderBrassPlayers",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "10c8fd536ab94842403a73c17b5d579975131d9db2f49c93c75fb4371df0706c"
+    },
+    {
+      "name": "brassIndustryName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "fe81661fa986ef5802b7994fc4dfc3ecdd8792db030cf89ce7d5177189e9659b"
+    },
+    {
+      "name": "brassIndustryNames",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "1cb27ad07359d7aee2e043049cf1a0b637982999f92cfe40099a98341a634cfd"
+    },
+    {
+      "name": "brassCityName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "13f899aa0dc4617331f5054d3683d4a3a3ac7e492df4b157e877d9c504ed6b0d"
+    },
+    {
+      "name": "brassMerchantRewardText",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "afaa19a8d468fe87e909c162c22cf6e26e4077ae2408ee0d1c44d8f9d4b66d29"
+    },
+    {
+      "name": "brassBoardTileTooltip",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "d7f7cc9bc1ea254ef042e7dffd1a819bfaabc839e3d8742319c6545f2c98e24d"
+    },
+    {
+      "name": "buildBrassMapCities",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "1d3a860cd84176fda43733e0c9bef00fef8c2b782afa211bb1a279b2d9eab88b"
+    },
+    {
+      "name": "routeColorStyle",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "178f5f7f1afb176a4ccf3eff245cbb64c88f7d06ebea37c49e3faf5f361cd045"
+    },
+    {
+      "name": "groupBrassBoardTiles",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "8ab837347c695c9ffd0317fd6aaea2d2bb4d07298f89b7e6762828d341642d09"
+    },
+    {
+      "name": "objectCounts",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "2931f71a86ade394a459d28a0ab4f8077c99e9f825b757ce9898f4890427d98c"
+    },
+    {
+      "name": "brassRouteKey",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "f2d93082d52117d1e01b0b5308a7ecd382503e08d612c057499811f0261dfb70"
+    },
+    {
+      "name": "brassSlotKey",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "766abe8c42906930e60ad1108f8526176373ea3fe7d0623337012f769c731008"
+    },
+    {
+      "name": "brassMapKey",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "05cd8bf86c12b6953ff657b477331c93343c6e6829e53d27be0516839a74a36c"
+    },
+    {
+      "name": "brassLayoutRouteKey",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "7d360d0ae540cec11e242967b44569f4e4c367f68c222372196973924d646926"
+    },
+    {
+      "name": "findRouteForLayout",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "3e5f25e3d978602dd0730e4cd2ee39822d4bbcadfeeae7cbbe0081e185daae3d"
+    },
+    {
+      "name": "routeTooltip",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "7f5ba82271937b792983261f1b448490b2788a4cfa269846c26617075cc866ac"
+    },
+    {
+      "name": "industrySlotTooltip",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "6f4802ed9638a04e972d17c336f656958c21495936fc9053bf0a4a46c0df6585"
+    },
+    {
+      "name": "buildCitySlotInfo",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "4a17049c6c22f3521024c1cd1c2892ca6556b93ef4a790e3d852cef82895d890"
+    },
+    {
+      "name": "buildRouteInfo",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "853c7b5884a5ef6eb8353badc5077049a15e0d35765aa22b9764a7a06620c065"
+    },
+    {
+      "name": "marketSlotsForLayout",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "282bdfac1be552aea5efa834842f11974bb42a0aeacedd1acfe4dd637ebae65f"
+    },
+    {
+      "name": "inferMarketSlotsFromRoutes",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "53f07f977376692aeb2126c3a8a4edd1d028e36c6b434f71f7a58332a6c65539"
+    },
+    {
+      "name": "marketSlotTooltip",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "1baf823780df382fc9f8d92563f3b00287c40a7c9170da784ea75f2684157f76"
+    },
+    {
+      "name": "cityCurrentRoadPoint",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "1c7c408cf438f7c7a05a5b646baff8891ffa19ba81dff5ce83ae30d9fb33b154"
+    },
+    {
+      "name": "shortPlayerName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "c165892db054aa07af743fa55b9406a7b8022371af4af9fa3e82cc9e7a3fe1e3"
+    },
+    {
+      "name": "brassIndustryShortName",
+      "file": "src/games/brass/helpers.jsx",
+      "hash": "90316dd37273b1d7e9b8b4301891139255f3e1a99b1ed59fd4f954d0ed174fa3"
+    },
+    {
+      "name": "camelRaceCardText",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "e72f715eecd1de31a60a4eccaaf008e5a495c6fd27e4193d06afd3ca32fccfa5"
+    },
+    {
+      "name": "asArray",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "5ee7d11710a735b803cbf0e81a46442e6413426779d2b9e996c88ef83c3eaa87"
+    },
+    {
+      "name": "camelBetCardText",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "3423d40ba3c2afe351493406adc40343a0402450dc8e7d4f75ecec0bb3d3d49e"
+    },
+    {
+      "name": "camelTokenStatusText",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "6ef4cb640728e532c227be1ec48206a2bc02cfe7e6af387500b14d9f6fc75b3b"
+    },
+    {
+      "name": "incanPhaseText",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "f4d70f3f2d4beaa71e3c8a3db36eff4cc59897b23ce3a592808f374d2e17fcc0"
+    },
+    {
+      "name": "thingsPhaseText",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "5ebc53aeff0868b417c6ed0f6dc34ecfd1107e933f306895978cf0fca921f708"
+    },
+    {
+      "name": "thingsPhaseIcon",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "a5c4d2086f83c558cbc6277cd90bdfe1b0aa378f9be020660f38072141e8ebfc"
+    },
+    {
+      "name": "thingsPhaseHint",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "cdc68be417703b9f269b59d11e8e99db060648bdefc67ecb706ea9243fa33845"
+    },
+    {
+      "name": "incanPhaseHint",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "36750b0549f5523692b88f9cad1168525324f0b40aa42c0d02b227e06bdc83af"
+    },
+    {
+      "name": "incanDisasterText",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "43cd5f443c06205b7d23806c2b0fb2fe178e864bf6fb70a92c7f7095a2acaa41"
+    },
+    {
+      "name": "incanCardText",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "e085eb2e61f52a15285fa9898c37e840d3e568a7f160b117701311e463b8d72b"
+    },
+    {
+      "name": "incanCardIcon",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "9c96a2fd00b97ee04f2f4041c4621d4ac5b1489be434e1fb3011c7d0d02588ac"
+    },
+    {
+      "name": "incanEventIcon",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "7350484504ffeb49b26ea9dbfeb9f5ae56b9af1430afd3e1e787c1d43d472645"
+    },
+    {
+      "name": "incanEventClass",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "6830ef4f598f0bfe5480fea648f68317e10f1e49b9b4379f10daed8a181fb797"
+    },
+    {
+      "name": "incanPlayerName",
+      "file": "src/games/incan-gold/helpers.jsx",
+      "hash": "442fdaf124ebae00b5a5fe0821e295fe792b488cabd122660a7db091917b96a6"
+    },
+    {
+      "name": "camelTokenAt",
+      "file": "src/games/camel-up-cards/helpers.jsx",
+      "hash": "de4dc26168df8e22bc84428a616bd2c3db5edd883bfbc475fefbccb721f9faf5"
+    },
+    {
+      "name": "wordText",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "d52f28ef0ac0494da97525856e93d600fdecc3e642eac4df07afd0ccdb095073"
+    },
+    {
+      "name": "ruleText",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "4fedad168305de0f1b857ae106c79cc7cf7f948620318ead3500722e08c8e35e"
+    },
+    {
+      "name": "areaShort",
+      "file": "src/games/things-in-rings/helpers.jsx",
+      "hash": "65236d4c2dbef81508d1d66333a159e2940bf68da202d04a3daaa317bbaba504"
+    },
+    {
+      "name": "isSeatOccupied",
+      "file": "src/features/rooms/roomView.js",
+      "hash": "c988b2281374f60808b1376e38fa1db1762317cf99e88deaaaece880fb726aa4"
+    },
+    {
+      "name": "displayName",
+      "file": "src/features/rooms/roomView.js",
+      "hash": "999d91831331dc0fc7f014c75401c510050519b03f1e6174c7be78a87f552c6f"
+    },
+    {
+      "name": "seatListOf",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "2707bb7083a7c2dfb65bbb9b67108b27da12f9f1de30c9aa8ce3f085aa47afa0"
+    },
+    {
+      "name": "hasCurrentUserProposed",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "258d0449338495dfdfcb95964bf76b4b5db5c20a4d8f42d33188c133ca1d6e0b"
+    },
+    {
+      "name": "isFinishedGameState",
+      "file": "src/pages/RoomPage.jsx",
+      "hash": "923653cd59b9919b8abbcb2a1758a25ae37518894114c729b2a851765e623b47"
+    },
+    {
+      "name": "relationLines",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "f531800a0ef85301c2fa95075c5c28988abaec24373fdbfe2d6fdd8c10215fb0"
+    },
+    {
+      "name": "visibleRpsGroups",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "866c954fa61307c0d72a42397a7af3b7772b6a0c6ab754f55b291ca32315db43"
+    },
+    {
+      "name": "rpsPlayerLabel",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "7b46c2da3c5f4b85fa7342cee3e3c7a7e7363e8fa6e4e44fb57122ad57906c2d"
+    },
+    {
+      "name": "moveDisplayFor",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "c6bc4515231b6f1853ee50cbd6798ebc4c98b5cf68814ee91fd6667255f87f4b"
+    },
+    {
+      "name": "rpsStatusText",
+      "file": "src/games/rps/helpers.jsx",
+      "hash": "ca0d5e75f792ef73516250791d02302e1b5caa47eb81be40b3bcb920bd505c13"
+    }
+  ],
+  "untouched": {
+    "src/styles/app.css": "df00c9c7de0745b3624e3fe9f75a3587857065b4d182f6b11245b0a801bd2068",
+    "src/lib/api.js": "78c10fd0dc4e884f95b719f1187e0e793cd120a34dfcb8acb93f095a582375a3",
+    "src/lib/websocket.js": "8987da10c89cc983dbfcb8da0f34474bb3555b4379edc545ef8f7cdf85548cf9",
+    "src/pages/GameLandingPage.jsx": "cba0c10e8a59ddead932385b26d54dff2f24e5e659dcc08d7c52141c008a9a4c",
+    "src/App.jsx": "7e7ae48fcc850a4f8c435c865fd3ebc20e3473e8f2f7402f1e6bcfd59c1bb768"
+  },
+  "markup": {
+    "brass-playing": "2530fb8dc5b04d319e2f4c2db042566b1c7ff7bda2a1ca345f65621b08f4eec5",
+    "brass-spectator": "24e40149787c616bd19aa2ffa1d3b47c5ed1be167cf0dc6a563b26fd4a00f92e",
+    "brass-rail": "1827408e607daf4900125124dfc7d99a66a26535e8edd90daa970100efe0c155",
+    "brass-selling": "2530fb8dc5b04d319e2f4c2db042566b1c7ff7bda2a1ca345f65621b08f4eec5",
+    "brass-finished": "6b11c1ef61ecf6b3eecf32057dcea16496e5d4cc6734d7aac38e6cb93c728aa0",
+    "incan-EXPLORATION": "0190ee1c244b2e1027d8841de7767128af3fee44bfaf6edb20a65fa5bdb47f53",
+    "incan-DECISION": "d98980db7ba776f5b52d42a04dba82bcc293683bf85b893524d31af762e4bad8",
+    "incan-THEFT_TARGETS": "39e5d0f956902ec537ecb940fffe0c6d69685ea9827f513a9985bd6883a99b9c",
+    "incan-DISASTER": "059dfa35e1f2e4adab37572a073f12d6e113c9b55128ff42e006d35b195cda87",
+    "incan-FINISHED": "1e027c2f086426e8ce0ee07ddb57bfcab4d1c8c0e0b37987179ed533d3fee301",
+    "incan-spectator": "346913120736c14a8e68ad319608dc9f5b5f16dc6849eb46014e6669b0df4986",
+    "things-SELECTING_HOST": "d4fb56f2babf307db07ad907ba186ca8ee187cbcc9ea5e0d30e63c2cf951082b",
+    "things-HOST_INITIAL_PLACEMENT": "2e4507882cff5fa4aef9b0be86f0e06574cf042acef08140e97b6688606e9ef5",
+    "things-HOST_TURN": "1a2c985dc8165c3a945004a1305f65012769cfa3421663eec320252eddab250d",
+    "things-GUESSER_TURN": "27f09ed298cb864774be867ecbc224e0e183d0358134055a5e4d9ccb3d0906e3",
+    "things-GAME_OVER": "95b61ff17f94167c31665b824f713889a5f1d0155efb135a3112027b21e0e1af",
+    "things-host-judgment": "190bb3adcee6086736a5738cf032af485d247511cdad66feb1143322752056e5",
+    "things-spectator": "5e9ad507170370f1914c376b44817f7240edb528cb39dfc05c531d357315a238",
+    "camel-SETUP_SELECTION": "d96cfd9b179660838c9c6b3b6da1767be61b2508552557dda71a4d105cac89d7",
+    "camel-PLAYING": "4f217c724b44492eff0031c7d51d398fb66ac95f96ba9b84da21bae7f2277346",
+    "camel-FINISHED": "f8cee906a3532be4cf7cdef5b797df62c6f0a83b7649e13b18924cae8e389d78",
+    "camel-spectator": "55ceb08c27a85e49ddeb87c1c0ac769a34f30785c0077769369b7e0842e884df",
+    "rps-3-free_for_all": "40a3d6a0ee1b800197ee3608ca953819f516bbd19f5836f7eaced4ff169c8094",
+    "rps-3-bracket": "8fc14610892edd49d93926c9bba41dce91c028c56c0f85c49bac223027958947",
+    "rps-5-free_for_all": "bfc82b36921bc27b74fe8eb1cf7bc6c4fa641691fab615d612e89830f41f55fb",
+    "rps-5-bracket": "9a6ed1a516e701d49bafaf33469b9b056efa9d4a686d973fc94959ec2269cf9a",
+    "rps-spectator": "6e58fb3665e3e23c304d436b57bbf72cc012c87e17a5b42e1d1f73b7039990ff"
+  },
+  "rpsBodyHash": "93bf0585f228105b815297f68cb9cd036b1e478e12f156a26106aecac7b0d3a5",
+  "rpsHookHash": "dcb859b32dcf13d00960f3ec42ac7f9fc8f3e601d01922493bb9aa7130fe0829"
+}

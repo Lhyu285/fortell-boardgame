@@ -10,19 +10,30 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 @Repository
 public class RoomRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final TransactionTemplate transactions;
 
     public RoomRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.transactions = new TransactionTemplate(new DataSourceTransactionManager(Objects.requireNonNull(jdbcTemplate.getDataSource())));
+    }
+
+    /** One database unit of work, sharing JdbcTemplate's thread-bound connection. */
+    public <T> T inTransaction(Supplier<T> work) {
+        return transactions.execute(status -> work.get());
     }
 
     public Optional<RoomEntity> findByGameTypeAndRoomId(GameType gameType, String roomId) {
@@ -45,6 +56,32 @@ public class RoomRepository {
                 roomId
         );
         return rows.stream().findFirst();
+    }
+
+    public List<RoomEntity> findActiveByMember(long userId) {
+        return jdbcTemplate.query(
+                """
+                select r.*
+                from rooms r
+                join room_members m on m.room_id = r.id
+                where m.user_id = ? and r.status in ('WAITING', 'IN_PROGRESS')
+                order by r.updated_at desc, r.id desc
+                """,
+                (resultSet, rowNum) -> new RoomEntity(
+                        resultSet.getLong("id"),
+                        GameType.valueOf(resultSet.getString("game_type")),
+                        resultSet.getString("room_id"),
+                        resultSet.getLong("owner_user_id"),
+                        resultSet.getString("password_hash"),
+                        resultSet.getInt("seat_count"),
+                        RoomStatus.valueOf(resultSet.getString("status")),
+                        resultSet.getString("config_json"),
+                        resultSet.getString("game_state_json"),
+                        Instant.parse(resultSet.getString("created_at")),
+                        Instant.parse(resultSet.getString("updated_at"))
+                ),
+                userId
+        );
     }
 
     public RoomEntity create(RoomEntity roomEntity) {
@@ -190,6 +227,12 @@ public class RoomRepository {
                 readableMessage,
                 createdAt.toString()
         );
+    }
+
+    /** Historical snapshots are append-only for structured transition modules. */
+    public void insertImmutableSnapshot(long roomDatabaseId, long version, String stateJson, Instant createdAt) {
+        jdbcTemplate.update("insert into game_snapshots (room_id, version, state_json, created_at) values (?, ?, ?, ?)",
+                roomDatabaseId, version, stateJson, createdAt.toString());
     }
 
     public List<RoomSeat> listSeats(long roomDatabaseId) {

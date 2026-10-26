@@ -54,6 +54,20 @@ public final class RoomDtos {
     ) {
     }
 
+    public record RoomSummary(
+            String gameType,
+            String gameName,
+            String roomId,
+            String status,
+            UserSummary owner,
+            int seatCount,
+            int occupiedSeatCount,
+            boolean currentUserSeated,
+            boolean currentUserOwner,
+            String updatedAt
+    ) {
+    }
+
     public record SeatView(
             @JsonProperty("seatIndex")
             int seatIndex,

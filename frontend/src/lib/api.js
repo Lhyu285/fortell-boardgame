@@ -35,6 +35,16 @@ export function apiPost(path, body) {
   });
 }
 
-export function apiDelete(path) {
-  return apiRequest(path, { method: "DELETE" });
+export function apiPut(path, body) {
+  return apiRequest(path, {
+    method: "PUT",
+    body: JSON.stringify(body ?? {})
+  });
+}
+
+export function apiDelete(path, body) {
+  return apiRequest(path, {
+    method: "DELETE",
+    ...(body === undefined ? {} : { body: JSON.stringify(body) })
+  });
 }

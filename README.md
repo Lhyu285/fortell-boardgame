@@ -1,156 +1,144 @@
-# 技术选型说明
+# FORTELL BOARDGAME
 
-本项目采用前后端分离的 MVP 结构：
+轻量级在线桌游平台。玩家可以注册账号、创建或加入房间，并通过浏览器与其他玩家实时对局。项目采用前后端分离架构，游戏规则由服务端模块处理，房间状态通过 WebSocket 同步。
 
-- 后端：`Spring Boot 4.0.5`、`Java 21` 基线、`SQLite`、`WebSocket`
-- 前端：`React 18`、`Vite`、`React Router`
-- 登录态：`Session Cookie`
+## 项目亮点
 
-选择原因：
+- **多人房间与实时同步**：支持创建房间、加入房间、座位管理和游戏配置；房间状态由后端维护，并实时推送给房间成员。
+- **可扩展的游戏模块**：游戏实现遵循统一的 `GameModule` 接口，由模块注册表按游戏类型分发配置、开局和行动处理逻辑。
+- **规则在服务端校验**：客户端提交行动，后端验证玩家身份、回合和行动合法性，再更新并广播房间状态。
+- **完整的账号流程**：支持注册、登录、验证码、登出、个人资料和密码管理；网页与 WebSocket 使用同一 Session 登录态。
+- **专门的伯明翰对局界面**：工业革命：伯明翰包含地图、市场、玩家面板与行动控制，并由服务端处理建造、出售、研发、运输网、贷款和侦查等行动。
 
-- Spring Boot + SQLite 足够覆盖注册、登录、房间、实时同步的最小工程闭环。
-- Session Cookie 让网页端和 WebSocket 复用同一登录态，复杂度低于 JWT。
-- React + Vite 启动快，适合在空目录里快速搭完整前端。
+## 游戏列表
 
-# 项目结构
+| 游戏 | 人数 | 玩法简介 |
+| --- | ---: | --- |
+| 工业革命：伯明翰（Brass: Birmingham） | 2–4 | 工业网络策略游戏，围绕产业建设、运输、市场和资源规划展开。 |
+| 印加宝藏（Incan Gold） | 2–8 | 玩家共同探险，在继续深入与带着收获返回之间作出选择。 |
+| 狂野骆驼：卡牌版（Camel Up: The Card Game） | 2–6 | 使用卡牌版规则参与骆驼竞速与下注。 |
+| 环中物语（Things in Rings） | 2–6 | 主持人持有隐藏规则，其他玩家根据提示推理词语应放入的区域。 |
+| 猜拳（RPS） | 2–8 | 可选择大乱斗或淘汰赛模式。 |
+
+代码中还包含五子棋模块；目前游戏目录接口暂不公开该入口。
+
+## 技术栈
+
+| 部分 | 技术 |
+| --- | --- |
+| 前端 | React 18、Vite、React Router |
+| 后端 | Java 21、Spring Boot 4、Spring WebSocket |
+| 数据存储 | SQLite、Spring JDBC |
+| 实时通信 | WebSocket（房间消息）与 REST API（账号、房间及游戏行动） |
+| 登录态 | HttpSession Cookie |
+
+## 快速开始
+
+### 环境要求
+
+- JDK 21 或更新版本
+- Node.js 18 或更新版本，以及 npm
+
+### Windows 一键启动
+
+在项目根目录运行：
+
+```powershell
+.\start-dev.cmd
+```
+
+脚本会分别打开后端和前端终端；首次运行前端时会自动安装依赖。浏览器访问 <http://localhost:5173>。后端默认监听 `8080`，Vite 会将 `/api` 和 `/ws` 请求代理到后端。
+
+也可以手动启动服务（在两个终端分别运行）：
+
+```powershell
+cd backend
+.\mvnw.cmd spring-boot:run
+```
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+macOS 或 Linux 同样在两个终端分别运行：
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+默认地址：
+
+- 前端：<http://localhost:5173>
+- 后端：<http://localhost:8080>
+
+后端默认使用 SQLite，数据库文件按启动工作目录创建。使用项目启动脚本时，后端工作目录为 `backend/`。
+
+## 项目结构
 
 ```text
-backend/
-├── src/main/java/com/fortell/boardgame/
-│   ├── config/
-│   ├── controllers/
-│   ├── game_modules/
-│   ├── models/
-│   ├── repositories/
-│   ├── security/
-│   ├── services/
-│   ├── utils/
-│   └── websocket/
-└── src/main/resources/
-
-frontend/
-├── src/components/
-├── src/hooks/
-├── src/lib/
-├── src/pages/
-└── src/styles/
+.
+├── backend/
+│   └── src/main/java/com/fortell/boardgame/
+│       ├── controllers/       # 账号、游戏目录、房间 API
+│       ├── game_modules/      # 各桌游规则模块
+│       ├── repositories/     # SQLite 数据访问
+│       ├── services/         # 账号与房间业务
+│       └── websocket/        # 房间实时消息
+├── frontend/
+│   └── src/
+│       ├── components/       # 页面框架与通用组件
+│       ├── features/rooms/   # 房间会话、命令与通用布局
+│       ├── games/            # 各游戏设置和对局界面
+│       └── pages/            # 登录、大厅、游戏目录、账号等页面
+├── scripts/                  # Windows 开发启动脚本
+├── DEPLOYMENT.md             # Linux + Nginx 部署说明
+└── README.md
 ```
 
-# 运行说明
+## 游戏模块与房间流程
 
-## 后端
+后端通过 `GameModule` 统一各游戏的配置清理、开局校验、初始状态和行动处理；`GameModuleRegistry` 根据房间的游戏类型找到对应模块。房间服务负责成员、座位和房间状态，WebSocket 将服务端产生的房间快照发送给在线成员。
 
-要求：
-
-- `JDK 21+`
-- 当前代码按 `Java 21` 编译目标编写，不使用更高版本 API
-
-Windows 示例：
-
-```powershell
-cd e:\projects\boardgame\backend
-$env:JAVA_HOME='D:\JDK 21'
-$env:Path="$env:JAVA_HOME\bin;$env:Path"
-.\mvnw.cmd spring-boot:run
+```mermaid
+flowchart LR
+    Browser[React 浏览器] -->|REST：账号、房间、行动| API[Spring Boot API]
+    API --> Rooms[房间服务]
+    Rooms --> Registry[游戏模块注册表]
+    Registry --> Modules[各桌游规则模块]
+    Rooms --> SQLite[(SQLite)]
+    Rooms --> Hub[房间消息中心]
+    Hub -->|WebSocket：房间快照| Browser
 ```
 
-后端默认地址：
+## 部署
 
-- `http://localhost:8080`
+生产部署建议由 Nginx 提供前端静态文件，并将 `/api` 和 `/ws` 转发到 Spring Boot 服务。服务器准备、构建、Nginx 配置和更新步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。
 
-## 前端
+当前配置面向单机部署；多实例房间同步需要额外的共享消息与状态方案。
 
-```powershell
-cd e:\projects\boardgame\frontend
-npm install
-npm run dev
+## 开发命令
+
+```bash
+# 前端开发服务器
+cd frontend && npm run dev
+
+# 前端构建
+cd frontend && npm run build
+
+# 前端自动化测试
+cd frontend && npm test
+
+# 后端自动化测试
+cd backend && ./mvnw test
 ```
 
-前端默认地址：
-
-- `http://localhost:5173`
-
-# 核心设计说明
-
-## 房间模型设计
-
-- `rooms` 表保存房间主记录：游戏类型、房间号、房主、密码哈希、人数、状态、配置 JSON、游戏状态 JSON。
-- `room_seats` 表保存每个座位的占用情况。
-- 房间状态以服务端为准，前端只渲染快照。
-
-## 游戏模块解耦方式
-
-- 统一使用 `GameModule` 接口。
-- 每个游戏独立提供：
-  - `defaultConfig`
-  - `initialState`
-  - `sanitizeConfig`
-  - `validateCanStart`
-  - `onStart`
-  - `onAction`
-- 房间服务不写死某个具体游戏逻辑，通过 `GameModuleRegistry` 按 `gameType` 调用。
-
-## 实时通信实现方式
-
-- REST 用于注册、登录、建房、入房、改配置、开始、退出、解散。
-- WebSocket 用于房间实时快照广播。
-- 房间内任何关键操作完成后，服务端广播最新 `room.snapshot`。
-
-# 验证说明
-
-建议按以下路径验证：
-
-1. 注册 / 登录
-   - 打开前端登录页
-   - 切换到注册
-   - 输入用户名、密码、确认密码、验证码
-   - 成功后应进入大厅
-
-2. 创建房间
-   - 在大厅进入 `rps` 或 `brass`
-   - 输入合法房间号或留空自动生成
-   - 创建成功后应跳转到 `/{game}/{roomId}`
-
-3. 加入房间
-   - 用另一个浏览器窗口登录
-   - 输入相同房间号加入
-   - 成功后两边都应看到座位同步
-
-4. 游戏流程
-   - `rps`：房主开始，玩家选择出拳并确认，公告栏显示结果
-   - `brass`：房主开始后显示占位态提示
-
-
-# 启动说明
-
-后端：
-
-cd e:\projects\boardgame\backend
-$env:JAVA_HOME='D:\JDK 21'
-$env:Path="$env:JAVA_HOME\bin;$env:Path"
-.\mvnw.cmd spring-boot:run
-
-http://localhost:8080
-
-前端：
-
-cd e:\projects\boardgame\frontend
-npm install
-npm run dev
-
-http://localhost:5173
-
-
-# 性能与扩展分析
-
-## 并发策略
-
-- 单机单实例
-- 房间粒度加锁，避免同一房间并发写入时状态错乱
-- 广播以房间为单位分发 WebSocket 消息
-
-## 房间数量估算
-
-- 当前实现适合 MVP、小规模内部测试或演示环境
-- 房间配置和状态以 JSON 存 SQLite，适合几十到几百个活跃房间的量级
-
+Windows 后端测试命令为 `cd backend` 后运行 `.\mvnw.cmd test`。

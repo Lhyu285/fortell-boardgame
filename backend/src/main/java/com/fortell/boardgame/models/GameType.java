@@ -5,7 +5,8 @@ public enum GameType {
     THINGS_IN_RINGS("thingsInRings", "环中物语", 2, 6, 4),
     CAMEL_UP_CARDS("camel_up_cards", "狂野骆驼：卡牌版", 2, 6, 4),
     GOBANG("gobang", "五子棋", 2, 2, 2),
-    BRASS("brass", "伯明翰", 2, 4, 4);
+    BRASS("brass", "伯明翰", 2, 4, 4),
+    INCAN_GOLD("incan_gold", "印加宝藏", 2, 8, 4);
 
     private final String path;
     private final String displayName;

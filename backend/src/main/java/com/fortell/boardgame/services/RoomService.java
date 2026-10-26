@@ -3,6 +3,8 @@ package com.fortell.boardgame.services;
 import com.fortell.boardgame.game_modules.GameModule;
 import com.fortell.boardgame.game_modules.GameModuleRegistry;
 import com.fortell.boardgame.game_modules.VersionedGameModule;
+import com.fortell.boardgame.game_modules.TransitionGameModule;
+import com.fortell.boardgame.game_modules.GameTransitionResult;
 import com.fortell.boardgame.models.ApiException;
 import com.fortell.boardgame.models.GameType;
 import com.fortell.boardgame.models.RoomDtos;
@@ -137,6 +139,12 @@ public class RoomService {
         LoadedRoom loadedRoom = load(parseGameType(gameTypePath), normalizeRoomId(roomId), "房间不存在");
         ensureMember(loadedRoom, currentUser);
         return toView(loadedRoom, currentUser);
+    }
+
+    public List<RoomDtos.RoomSummary> listMyRooms(UserSummary user) {
+        return roomRepository.findActiveByMember(user.id()).stream()
+                .map(room -> toRoomSummary(room, user))
+                .toList();
     }
 
     public RoomDtos.RoomView moveSeat(String gameTypePath, String roomId, Integer seatIndex, UserSummary user) {
@@ -275,42 +283,46 @@ public class RoomService {
         GameType gameType = parseGameType(gameTypePath);
         String normalizedRoomId = normalizeRoomId(roomId);
         synchronized (lockFor(gameType, normalizedRoomId)) {
-            LoadedRoom loadedRoom = load(gameType, normalizedRoomId, "房间不存在");
-            ensureOwner(loadedRoom.entity, user);
+            LoadedRoom updatedRoom = roomRepository.inTransaction(() -> {
+                LoadedRoom loadedRoom = load(gameType, normalizedRoomId, "房间不存在");
+                ensureOwner(loadedRoom.entity, user);
 
-            if (humanSeatCount(loadedRoom.seats) != loadedRoom.entity.seatCount()) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "房间内仍有空座位，无法开始游戏");
-            }
+                if (humanSeatCount(loadedRoom.seats) != loadedRoom.entity.seatCount()) {
+                    throw new ApiException(HttpStatus.BAD_REQUEST, "房间内仍有空座位，无法开始游戏");
+                }
 
-            GameModule module = gameModuleRegistry.get(gameType);
-            module.validateCanStart(loadedRoom.entity, loadedRoom.seats);
-            Map<String, Object> state = module.onStart(loadedRoom.entity, loadedRoom.seats, loadedRoom.config);
-            Instant updatedAt = Instant.now();
-            String stateJson = jsonUtils.write(state);
+                GameModule module = gameModuleRegistry.get(gameType);
+                module.validateCanStart(loadedRoom.entity, loadedRoom.seats);
+                Map<String, Object> state = module.onStart(loadedRoom.entity, loadedRoom.seats, loadedRoom.config);
+                Instant updatedAt = Instant.now();
+                String stateJson = jsonUtils.write(state);
 
-            roomRepository.update(new RoomEntity(
-                    loadedRoom.entity.id(),
-                    loadedRoom.entity.gameType(),
-                    loadedRoom.entity.roomId(),
-                    loadedRoom.entity.ownerUserId(),
-                    loadedRoom.entity.passwordHash(),
-                    loadedRoom.entity.seatCount(),
-                    RoomStatus.IN_PROGRESS,
-                    loadedRoom.entity.configJson(),
-                    stateJson,
-                    loadedRoom.entity.createdAt(),
-                    updatedAt
-            ));
-            if (module instanceof VersionedGameModule) {
-                roomRepository.insertSnapshot(
+                roomRepository.update(new RoomEntity(
                         loadedRoom.entity.id(),
-                        currentStateVersion(state),
+                        loadedRoom.entity.gameType(),
+                        loadedRoom.entity.roomId(),
+                        loadedRoom.entity.ownerUserId(),
+                        loadedRoom.entity.passwordHash(),
+                        loadedRoom.entity.seatCount(),
+                        RoomStatus.IN_PROGRESS,
+                        loadedRoom.entity.configJson(),
                         stateJson,
+                        loadedRoom.entity.createdAt(),
                         updatedAt
-                );
-            }
+                ));
+                if (module instanceof VersionedGameModule) {
+                    if (module instanceof TransitionGameModule) {
+                        roomRepository.insertImmutableSnapshot(loadedRoom.entity.id(), currentStateVersion(state), stateJson, updatedAt);
+                    } else roomRepository.insertSnapshot(
+                            loadedRoom.entity.id(),
+                            currentStateVersion(state),
+                            stateJson,
+                            updatedAt
+                    );
+                }
 
-            LoadedRoom updatedRoom = load(gameType, normalizedRoomId, "房间不存在");
+                return load(gameType, normalizedRoomId, "房间不存在");
+            });
             broadcastRoom(updatedRoom);
             return toView(updatedRoom, user);
         }
@@ -495,78 +507,86 @@ public class RoomService {
         GameType gameType = parseGameType(gameTypePath);
         String normalizedRoomId = normalizeRoomId(roomId);
         synchronized (lockFor(gameType, normalizedRoomId)) {
-            LoadedRoom loadedRoom = load(gameType, normalizedRoomId, "房间不存在");
-            ensureMember(loadedRoom, user);
-            if (loadedRoom.entity.status() != RoomStatus.IN_PROGRESS) {
-                throw new ApiException(HttpStatus.BAD_REQUEST, "当前房间尚未开始游戏");
-            }
+            LoadedRoom updatedRoom = roomRepository.inTransaction(() -> {
+                LoadedRoom loadedRoom = load(gameType, normalizedRoomId, "房间不存在");
+                ensureMember(loadedRoom, user);
+                if (loadedRoom.entity.status() != RoomStatus.IN_PROGRESS) {
+                    throw new ApiException(HttpStatus.BAD_REQUEST, "当前房间尚未开始游戏");
+                }
 
-            GameModule module = gameModuleRegistry.get(gameType);
-            boolean versioned = module instanceof VersionedGameModule;
-            Map<String, Object> actionPayload = payload == null ? Map.of() : payload;
-            if (versioned) {
-                validateVersionedAction(loadedRoom, user, stateVersion, clientActionId);
-            }
-            Map<String, Object> state = module.onAction(
-                    loadedRoom.entity,
-                    loadedRoom.seats,
-                    loadedRoom.config,
-                    new LinkedHashMap<>(loadedRoom.state),
-                    user,
-                    actionType,
-                    actionPayload,
-                    noticesOf(loadedRoom.state)
-            );
-            if (versioned) {
-                state.put("version", currentStateVersion(loadedRoom.state) + 1);
-            }
-            RoomStatus nextStatus = state.containsKey("_roomStatus")
-                    ? RoomStatus.valueOf(String.valueOf(state.remove("_roomStatus")))
-                    : loadedRoom.entity.status();
-
-            Instant updatedAt = Instant.now();
-            String stateJson = jsonUtils.write(state);
-            roomRepository.update(new RoomEntity(
-                    loadedRoom.entity.id(),
-                    loadedRoom.entity.gameType(),
-                    loadedRoom.entity.roomId(),
-                    loadedRoom.entity.ownerUserId(),
-                    loadedRoom.entity.passwordHash(),
-                    loadedRoom.entity.seatCount(),
-                    nextStatus,
-                    loadedRoom.entity.configJson(),
-                    stateJson,
-                    loadedRoom.entity.createdAt(),
-                    updatedAt
-            ));
-            if (versioned) {
-                long nextVersion = currentStateVersion(state);
-                roomRepository.insertClientAction(
-                        loadedRoom.entity.id(),
-                        user.id(),
-                        clientActionId.trim(),
-                        stateVersion,
-                        updatedAt
-                );
-                roomRepository.insertSnapshot(
-                        loadedRoom.entity.id(),
-                        nextVersion,
-                        stateJson,
-                        updatedAt
-                );
-                roomRepository.insertActionLog(
-                        loadedRoom.entity.id(),
-                        nextVersion,
-                        user.id(),
+                GameModule module = gameModuleRegistry.get(gameType);
+                boolean versioned = module instanceof VersionedGameModule;
+                Map<String, Object> actionPayload = payload == null ? Map.of() : payload;
+                if (versioned) {
+                    validateVersionedAction(loadedRoom, user, stateVersion, clientActionId);
+                }
+                GameTransitionResult transition = module instanceof TransitionGameModule structured
+                        ? structured.onTransition(loadedRoom.entity, loadedRoom.seats, loadedRoom.config,
+                        new LinkedHashMap<>(loadedRoom.state), user, actionType, actionPayload, noticesOf(loadedRoom.state))
+                        : null;
+                Map<String, Object> state = transition != null ? transition.state() : module.onAction(
+                        loadedRoom.entity,
+                        loadedRoom.seats,
+                        loadedRoom.config,
+                        new LinkedHashMap<>(loadedRoom.state),
+                        user,
                         actionType,
-                        jsonUtils.write(new LinkedHashMap<>(actionPayload)),
-                        jsonUtils.write(lastActionEvent(state)),
-                        lastActionMessage(state, actionType),
-                        updatedAt
+                        actionPayload,
+                        noticesOf(loadedRoom.state)
                 );
-            }
+                if (versioned) {
+                    state.put("version", currentStateVersion(loadedRoom.state) + 1);
+                }
+                RoomStatus nextStatus = state.containsKey("_roomStatus")
+                        ? RoomStatus.valueOf(String.valueOf(state.remove("_roomStatus")))
+                        : loadedRoom.entity.status();
 
-            LoadedRoom updatedRoom = load(gameType, normalizedRoomId, "房间不存在");
+                Instant updatedAt = Instant.now();
+                String stateJson = jsonUtils.write(state);
+                roomRepository.update(new RoomEntity(
+                        loadedRoom.entity.id(),
+                        loadedRoom.entity.gameType(),
+                        loadedRoom.entity.roomId(),
+                        loadedRoom.entity.ownerUserId(),
+                        loadedRoom.entity.passwordHash(),
+                        loadedRoom.entity.seatCount(),
+                        nextStatus,
+                        loadedRoom.entity.configJson(),
+                        stateJson,
+                        loadedRoom.entity.createdAt(),
+                        updatedAt
+                ));
+                if (versioned) {
+                    long nextVersion = currentStateVersion(state);
+                    roomRepository.insertClientAction(
+                            loadedRoom.entity.id(),
+                            user.id(),
+                            clientActionId.trim(),
+                            stateVersion,
+                            updatedAt
+                    );
+                    if (transition != null) {
+                        roomRepository.insertImmutableSnapshot(loadedRoom.entity.id(), nextVersion, stateJson, updatedAt);
+                    } else roomRepository.insertSnapshot(
+                            loadedRoom.entity.id(),
+                            nextVersion,
+                            stateJson,
+                            updatedAt
+                    );
+                    roomRepository.insertActionLog(
+                            loadedRoom.entity.id(),
+                            nextVersion,
+                            user.id(),
+                            actionType,
+                            jsonUtils.write(new LinkedHashMap<>(actionPayload)),
+                            jsonUtils.write(transition != null ? transition.event() : lastActionEvent(state)),
+                            transition != null ? transition.message() : lastActionMessage(state, actionType),
+                            updatedAt
+                    );
+                }
+
+                return load(gameType, normalizedRoomId, "房间不存在");
+            });
             broadcastRoom(updatedRoom);
             return toView(updatedRoom, user);
         }
@@ -594,7 +614,7 @@ public class RoomService {
 
     private void backfillMembers(RoomEntity entity, List<RoomSeat> seats) {
         userRepository.findById(entity.ownerUserId())
-                .map(account -> new UserSummary(account.id(), account.username()))
+                .map(account -> new UserSummary(account.id(), account.nickname()))
                 .ifPresent(user -> roomRepository.addMember(entity.id(), user));
         for (RoomSeat seat : seats) {
             if (!seat.occupied() || seat.bot()) {
@@ -607,7 +627,7 @@ public class RoomService {
     private RoomDtos.RoomView toView(LoadedRoom loadedRoom, UserSummary currentUser) {
         GameModule module = gameModuleRegistry.get(loadedRoom.entity.gameType());
         UserSummary owner = userRepository.findById(loadedRoom.entity.ownerUserId())
-                .map(account -> new UserSummary(account.id(), account.username()))
+                .map(account -> new UserSummary(account.id(), account.nickname()))
                 .orElseGet(() -> new UserSummary(loadedRoom.entity.ownerUserId(), "房主"));
         boolean member = memberOf(loadedRoom.members, currentUser.id());
         boolean seated = seatOf(loadedRoom.seats, currentUser.id()).isPresent();
@@ -634,7 +654,7 @@ public class RoomService {
                 roomState,
                 seatViews,
                 loadedRoom.config,
-                loadedRoom.state,
+                module.stateForViewer(loadedRoom.state, currentUser),
                 noticesOf(loadedRoom.state),
                 module.rules(),
                 new RoomDtos.ActionPermissions(
@@ -648,6 +668,28 @@ public class RoomService {
                         seated && loadedRoom.entity.status() == RoomStatus.IN_PROGRESS,
                         false
                 )
+        );
+    }
+
+    private RoomDtos.RoomSummary toRoomSummary(RoomEntity room, UserSummary currentUser) {
+        GameModule module = gameModuleRegistry.get(room.gameType());
+        UserSummary owner = userRepository.findById(room.ownerUserId())
+                .map(account -> new UserSummary(account.id(), account.nickname()))
+                .orElseGet(() -> new UserSummary(room.ownerUserId(), "房主"));
+        List<RoomSeat> seats = roomRepository.listSeats(room.id());
+        boolean seated = seatOf(seats, currentUser.id()).isPresent();
+        int occupiedSeatCount = humanSeatCount(seats);
+        return new RoomDtos.RoomSummary(
+                room.gameType().path(),
+                module.descriptor().name(),
+                room.roomId(),
+                room.status().name(),
+                owner,
+                room.seatCount(),
+                occupiedSeatCount,
+                seated,
+                room.ownerUserId() == currentUser.id(),
+                room.updatedAt().toString()
         );
     }
 
@@ -820,7 +862,7 @@ public class RoomService {
         if (seatCount < gameType.minPlayers() || seatCount > gameType.maxPlayers()) {
             throw new ApiException(
                     HttpStatus.BAD_REQUEST,
-                    "支持人数：" + gameType.minPlayers() + "-" + gameType.maxPlayers() + "人"
+                    "支持人数：" + gameType.minPlayers() + "~" + gameType.maxPlayers() + "人"
             );
         }
         return seatCount;

@@ -106,6 +106,9 @@ class BrassMultiplayerScenarioTest {
             assertEquals("rail", state.get("era"));
             assertEquals("playing", state.get("phase"));
             assertEquals(1, number(state.get("round")));
+            int expectedCanalRounds = 12 - playerCount;
+            assertTrue(list(state.get("notices")).stream()
+                    .anyMatch(notice -> String.valueOf(notice).contains("第" + expectedCanalRounds + "轮结束")));
             assertEquals(8, list(map(state.get("hands")).get(String.valueOf(state.get("currentPlayerId")))).size());
         }
     }
@@ -135,6 +138,9 @@ class BrassMultiplayerScenarioTest {
             assertEquals("finished", state.get("phase"));
             assertFalse(list(state.get("winners")).isEmpty());
             assertTrue(list(map(state.get("availableActions")).get("actions")).isEmpty());
+            int expectedRounds = 12 - playerCount;
+            assertTrue(list(state.get("notices")).stream()
+                    .anyMatch(notice -> String.valueOf(notice).contains("第" + expectedRounds + "轮结束")));
         }
     }
 

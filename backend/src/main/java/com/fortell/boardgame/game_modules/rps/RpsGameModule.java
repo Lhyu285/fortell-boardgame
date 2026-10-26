@@ -42,7 +42,7 @@ public class RpsGameModule implements GameModule {
 
     @Override
     public GameDescriptor descriptor() {
-        return new GameDescriptor("rps", "猜拳", "/rps", "/rps/rule", 2, 8, "支持大乱斗和淘汰赛");
+        return new GameDescriptor("rps", "猜拳", "RPS", "/rps", "/rps/rule", 2, 8, "2", "支持大乱斗和淘汰赛");
     }
 
     @Override

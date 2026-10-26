@@ -2,6 +2,9 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
+    account_id TEXT NOT NULL UNIQUE,
+    nickname TEXT NOT NULL,
+    preferred_color TEXT NOT NULL DEFAULT '红',
     created_at TEXT NOT NULL
 );
 

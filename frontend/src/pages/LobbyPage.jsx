@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../components/ConfirmModal";
-import PageShell from "../components/PageShell";
-import { useAppContext } from "../hooks/useAppContext";
-import { apiGet, apiPost } from "../lib/api";
+import SiteHeader from "../components/SiteHeader";
+import { apiGet } from "../lib/api";
 
 export default function LobbyPage() {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useAppContext();
   const [games, setGames] = useState([]);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [logoutPending, setLogoutPending] = useState(false);
-  const [logoutError, setLogoutError] = useState("");
 
   useEffect(() => {
     apiGet("/api/games")
@@ -19,44 +13,41 @@ export default function LobbyPage() {
       .catch(() => setGames([]));
   }, []);
 
-  async function logout() {
-    setLogoutPending(true);
-    setLogoutError("");
-    try {
-      await apiPost("/api/auth/logout", {});
-      setCurrentUser(null);
-      navigate("/login", { replace: true });
-    } catch (exception) {
-      setLogoutError(exception.message);
-      setLogoutPending(false);
-    }
-  }
-
   return (
-    <PageShell
-      title="游戏大厅"
-      subtitle={`当前用户：${currentUser?.username ?? ""}`}
-      actions={<button className="ghost-button" onClick={() => setLogoutConfirmOpen(true)}>退出登录</button>}
-    >
-      <div className="stack-list">
-        {games.map((game) => (
-          <button key={game.key} className="game-entry" onClick={() => navigate(game.path)}>
-            <strong>{game.name}</strong>
-            <span>{game.summary}</span>
-          </button>
-        ))}
-      </div>
-      <ConfirmModal
-        open={logoutConfirmOpen}
-        message="是否确认退出登录？"
-        busy={logoutPending}
-        error={logoutError}
-        onCancel={() => {
-          setLogoutConfirmOpen(false);
-          setLogoutError("");
-        }}
-        onConfirm={logout}
-      />
-    </PageShell>
+    <div className="lobby-page">
+      <SiteHeader />
+
+      <main className="lobby-content">
+        <section className="lobby-banner" aria-labelledby="lobby-title">
+          <div>
+            <span className="lobby-banner-kicker">FORTELL BOARDGAME</span>
+            <h1 id="lobby-title">轻松开局</h1>
+            <p>挑一款游戏，和朋友开始一局轻松的桌游。</p>
+          </div>
+          <span className="lobby-banner-orbit" aria-hidden="true">✦</span>
+        </section>
+
+        <section className="lobby-games-section" aria-labelledby="games-title">
+          <div className="lobby-section-heading">
+            <div>
+              <span className="section-kicker">GAME LIBRARY</span>
+              <h2 id="games-title">选择游戏</h2>
+            </div>
+            <span className="game-count">{games.length} 款游戏</span>
+          </div>
+          <div className="lobby-game-grid">
+            {games.map((game) => (
+              <button key={game.key} className="game-entry lobby-game-card lobby-game-card-simple" onClick={() => navigate(game.path)}>
+                <span className="game-card-icon" aria-hidden="true">✦</span>
+                <span className="game-card-copy">
+                  <strong>{game.name}</strong>
+                </span>
+                <span className="game-card-arrow" aria-hidden="true">↗</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

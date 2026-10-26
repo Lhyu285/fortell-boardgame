@@ -2,6 +2,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./hooks/useAppContext";
 import LoginPage from "./pages/LoginPage";
 import LobbyPage from "./pages/LobbyPage";
+import GameListPage from "./pages/GameListPage";
+import GameRoomsPage from "./pages/GameRoomsPage";
+import AccountPage from "./pages/AccountPage";
 import GameLandingPage from "./pages/GameLandingPage";
 import RoomPage from "./pages/RoomPage";
 import RulesPage from "./pages/RulesPage";
@@ -18,6 +21,30 @@ export default function App() {
           element={
             <ProtectedRoute>
               <LobbyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/games"
+          element={
+            <ProtectedRoute>
+              <GameListPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rooms"
+          element={
+            <ProtectedRoute>
+              <GameRoomsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <AccountPage />
             </ProtectedRoute>
           }
         />

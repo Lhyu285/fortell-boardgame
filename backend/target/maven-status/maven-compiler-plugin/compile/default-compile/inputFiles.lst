@@ -2,6 +2,7 @@ E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\BoardGameAppli
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\config\AppConfig.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\config\CorsConfig.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\config\WebSocketConfig.java
+E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\controllers\AccountController.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\controllers\ApiExceptionHandler.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\controllers\AuthController.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\controllers\GamesController.java
@@ -11,9 +12,11 @@ E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\c
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\GameModule.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\GameModuleRegistry.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\gobang\GobangGameModule.java
+E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\incan_gold\IncanGoldGameModule.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\rps\RpsGameModule.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\thingsInRings\ThingsInRingsGameModule.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\game_modules\VersionedGameModule.java
+E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\models\AccountDtos.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\models\ApiError.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\models\ApiException.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\models\AuthDtos.java
@@ -30,6 +33,7 @@ E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\models\UserSum
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\repositories\RoomRepository.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\repositories\UserRepository.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\security\AuthSupport.java
+E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\services\AccountService.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\services\AuthService.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\services\RoomService.java
 E:\projects\boardgame\backend\src\main\java\com\fortell\boardgame\utils\JsonUtils.java

@@ -53,5 +53,6 @@ function labelFor(gameType) {
   if (gameType === "rps") return "猜拳";
   if (gameType === "gobang") return "五子棋";
   if (gameType === "brass") return "伯明翰";
+  if (gameType === "incan_gold") return "印加宝藏";
   return gameType;
 }

@@ -39,6 +39,11 @@ public class RoomController {
         return roomService.getRoom(gameType, roomId, authSupport.requireUser(session));
     }
 
+    @GetMapping("/rooms/mine")
+    public java.util.List<RoomDtos.RoomSummary> listMyRooms(HttpSession session) {
+        return roomService.listMyRooms(authSupport.requireUser(session));
+    }
+
     @PostMapping("/rooms/{gameType}/{roomId}/seat")
     public RoomDtos.RoomView moveSeat(
             @PathVariable String gameType,

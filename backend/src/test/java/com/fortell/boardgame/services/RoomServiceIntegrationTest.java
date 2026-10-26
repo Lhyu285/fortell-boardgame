@@ -152,6 +152,33 @@ class RoomServiceIntegrationTest {
     }
 
     @Test
+    void listsOnlyCurrentUsersActiveRoomsAndSupportsSpectatorExit() {
+        createRoom("brass", "1234", "", 2);
+        roomService.joinRoom(guest, new RoomDtos.JoinRoomRequest("brass", "1234", ""));
+
+        List<RoomDtos.RoomSummary> waitingRooms = roomService.listMyRooms(guest);
+        assertEquals(1, waitingRooms.size());
+        assertEquals("WAITING", waitingRooms.get(0).status());
+        assertFalse(waitingRooms.get(0).currentUserSeated());
+
+        roomService.moveSeat("brass", "1234", 1, guest);
+        roomService.startGame("brass", "1234", owner);
+        UserSummary spectator = createUser("spectator");
+        roomService.joinRoom(spectator, new RoomDtos.JoinRoomRequest("brass", "1234", ""));
+
+        List<RoomDtos.RoomSummary> spectatorRooms = roomService.listMyRooms(spectator);
+        assertEquals(1, spectatorRooms.size());
+        assertEquals("IN_PROGRESS", spectatorRooms.get(0).status());
+        assertFalse(spectatorRooms.get(0).currentUserSeated());
+        assertTrue(roomService.leaveRoom("brass", "1234", spectator).success());
+        assertTrue(roomService.listMyRooms(spectator).isEmpty());
+
+        assertEquals(HttpStatus.BAD_REQUEST, apiFailure(() ->
+                roomService.leaveRoom("brass", "1234", guest)).getStatus());
+        assertEquals(1, roomService.listMyRooms(guest).size());
+    }
+
+    @Test
     void onlyActiveSeatedNonOwnerPlayersCanProposeEndingTheGame() {
         startTwoPlayerBrass();
         RoomDtos.RoomView proposed = roomService.proposeEndGame("brass", "1234", guest);
@@ -175,7 +202,8 @@ class RoomServiceIntegrationTest {
         long version = ((Number) started.gameState().get("version")).longValue();
         long currentPlayerId = ((Number) started.gameState().get("currentPlayerId")).longValue();
         UserSummary actor = currentPlayerId == owner.id() ? owner : guest;
-        String cardId = String.valueOf(((Map<?, ?>) ((List<?>) ((Map<?, ?>) started.gameState().get("hands"))
+        Map<String, Object> actorState = roomService.getRoom("brass", "1234", actor).gameState();
+        String cardId = String.valueOf(((Map<?, ?>) ((List<?>) ((Map<?, ?>) actorState.get("hands"))
                 .get(String.valueOf(actor.id()))).get(0)).get("id"));
 
         RoomDtos.RoomView afterAction = roomService.handleGameAction(
